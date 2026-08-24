@@ -1,0 +1,2 @@
+[![Build Status](https://github.com/RasiadalPoloAlessandro/Minecraft_HealthBarPlugin/actions/workflows/main.yml/badge.svg)](https://github.com/RasiadalPoloAlessandro/Minecraft_HealthBarPlugin/actions/workflows/main.yml)
+[![Static Analysis](https://img.shields.io/badge/Checkstyle-Passing-brightgreen)](https://github.com/RasiadalPoloAlessandro/Minecraft_HealthBarPlugin/actions)
