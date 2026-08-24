@@ -1,0 +1,33 @@
+name: CI automation using Maven
+#Execute on every push or pull request
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Access repository content
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      # Java Development Kit configuration
+      - name: JDK SETUP
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      # Compile source code
+      - name: COMPILE
+        run: mvn compile
+
+      # Run all unit tests
+      - name: UNIT TESTING
+        run: mvn test
+
+      # Run checkstyle as it is configured to be part of the package phase
+      - name: STATIC CODE ANALYSIS + PACKAGE
+        run: mvn package
