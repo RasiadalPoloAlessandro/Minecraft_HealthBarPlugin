@@ -1,9 +1,14 @@
 package org.coolplugins.cool_HealthBar;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+import org.w3c.dom.Text;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -24,6 +29,16 @@ public class HealthManager {
     public void displayHealth(Player player, LivingEntity entity){
         logger.info(String.format("Player %s punta %s (%.1f%% HP)",
                 player.getName(), entity.getType(), getPercentage(entity)));
+
+    }
+
+    public void hideHealthBar(LivingEntity entity) {
+
+        List<Entity> entities = entity.getPassengers();
+        for(Entity e : entities)
+            if(e instanceof TextDisplay textDisplay) {
+                textDisplay.remove();
+            }
     }
 
 }

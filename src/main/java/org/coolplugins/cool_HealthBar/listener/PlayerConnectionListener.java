@@ -7,17 +7,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.coolplugins.cool_HealthBar.HealthManager;
+import org.coolplugins.cool_HealthBar.HealthManagerGUI;
 import org.coolplugins.cool_HealthBar.task.PlayerRayCastTask;
 
 public class PlayerConnectionListener implements Listener {
 
     private final Plugin plugin;
-    private final HealthManager healthManager;
+    private final HealthManagerGUI healthManagerGUI;
 
 
-    public PlayerConnectionListener(Plugin plugin, HealthManager healthManager) {
+    public PlayerConnectionListener(Plugin plugin, HealthManagerGUI healthManagerGUi) {
         this.plugin = plugin;
-        this.healthManager = healthManager;
+        this.healthManagerGUI = healthManagerGUi;
     }
 
     @EventHandler
@@ -27,7 +28,7 @@ public class PlayerConnectionListener implements Listener {
 
         Bukkit.getScheduler().runTaskTimer(
                 plugin,
-                new PlayerRayCastTask(player.getUniqueId(), healthManager),
+                new PlayerRayCastTask(player.getUniqueId(), healthManagerGUI),
                 0L, //Starts immediately
                 2L // Repeat every 2 ticks
         );

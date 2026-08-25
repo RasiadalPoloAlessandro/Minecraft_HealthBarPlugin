@@ -1,11 +1,13 @@
 package org.coolplugins.cool_HealthBar.task;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.coolplugins.cool_HealthBar.HealthManager;
+import org.coolplugins.cool_HealthBar.HealthManagerGUI;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -18,12 +20,13 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
     private final UUID playerUUID;
 
-    private final HealthManager healthManager;
+    private final HealthManagerGUI healthManagerGUI;
 
 
-    public PlayerRayCastTask(UUID playerUUID, HealthManager healthManager) {
+
+    public PlayerRayCastTask(UUID playerUUID, HealthManagerGUI healthManagerGUI) {
         this.playerUUID = playerUUID;
-        this.healthManager = healthManager;
+        this.healthManagerGUI = healthManagerGUI;
     }
 
     @Override
@@ -37,9 +40,8 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
             final int maxDistance = 8;
             Entity entity = player.getTargetEntity(maxDistance);
             if (entity instanceof LivingEntity livingTarget) {
-                healthManager.displayHealth(player, livingTarget);
+                healthManagerGUI.showOrUpdateText(livingTarget, Component.text(livingTarget.getHealth()));
             }
-                // TODO Hide HealthBar
         }
         else
             bukkitTask.cancel();
