@@ -15,13 +15,13 @@ public class PlayerConnectionListener implements Listener {
     private final HealthManager healthManager;
 
 
-    public PlayerConnectionListener(Plugin plugin, HealthManager healthManager){
+    public PlayerConnectionListener(Plugin plugin, HealthManager healthManager) {
         this.plugin = plugin;
         this.healthManager = healthManager;
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
+    public void onPlayerJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
 

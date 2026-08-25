@@ -17,7 +17,8 @@ public class HealthManager {
     }
 
     private double getPercentage(LivingEntity entity){
-        return (entity.getHealth() * 100)/Objects.requireNonNull(entity.getAttribute(Attribute.MAX_HEALTH)).getValue();
+        final int MAX_PERCENT = 100;
+        return (entity.getHealth() * MAX_PERCENT)/Objects.requireNonNull(entity.getAttribute(Attribute.MAX_HEALTH)).getValue();
     }
 
     public void displayHealth(Player player, LivingEntity entity){
