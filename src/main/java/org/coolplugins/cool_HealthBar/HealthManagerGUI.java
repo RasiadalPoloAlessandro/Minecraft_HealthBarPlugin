@@ -31,7 +31,7 @@ public class HealthManagerGUI {
         UUID mobUUID = livingEntity.getUniqueId();
         UUID displayUUID = mobToDisplayMap.get(mobUUID);
 
-        // Check if there already is an active and valid display
+        // Check if an active and valid display already exists
         if (displayUUID != null) {
             Entity displayEntity = Bukkit.getEntity(displayUUID);
             if (displayEntity instanceof TextDisplay textDisplay && textDisplay.isValid()) {
