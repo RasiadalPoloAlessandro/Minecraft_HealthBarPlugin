@@ -28,7 +28,7 @@ public class MobDamageListener implements Listener {
         if(entity instanceof LivingEntity livingEntity) {
 
             double currentHealth = livingEntity.getHealth() - event.getFinalDamage();
-            if(currentHealth <= 0)
+            if(currentHealth <= 0.0)
                 healthGUI.removeDisplay(livingEntity.getUniqueId());
         }
     }

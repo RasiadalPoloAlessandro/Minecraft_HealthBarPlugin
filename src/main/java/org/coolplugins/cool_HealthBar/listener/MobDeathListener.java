@@ -1,6 +1,7 @@
 package org.coolplugins.cool_HealthBar.listener;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -16,6 +17,7 @@ public class MobDeathListener implements Listener {
 
     @EventHandler
     public void onMobDeath(EntityDeathEvent event){
-        healthGUI.removeDisplay(event.getEntity().getUniqueId());
+        //Entity entity = event.getEntity(); returns a livingEntity
+            healthGUI.removeDisplay(event.getEntity().getUniqueId());
     }
 }

@@ -39,9 +39,14 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
             // How many blocks does the ray cover
             final int maxDistance = 8;
             Entity entity = player.getTargetEntity(maxDistance);
-            if (entity instanceof LivingEntity livingTarget) {
-                healthManagerGUI.showOrUpdateText(livingTarget, Component.text(livingTarget.getHealth()));
+            if (entity instanceof LivingEntity livingTarget && livingTarget.getHealth() > 0) {
+                if (!livingTarget.isDead() && livingTarget.getHealth() > 0) {
+                    healthManagerGUI.showOrUpdateText(livingTarget, Component.text(livingTarget.getHealth()));
+                } else {
+                    healthManagerGUI.removeDisplay(livingTarget.getUniqueId());
+                }
             }
+
         }
         else
             bukkitTask.cancel();

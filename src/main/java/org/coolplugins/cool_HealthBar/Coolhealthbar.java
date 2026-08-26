@@ -32,5 +32,8 @@ public final class Coolhealthbar extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+
+        //Remove all healthbars
+        healthManagerGUI.clearAll();
     }
 }

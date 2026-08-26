@@ -1,12 +1,7 @@
 package org.coolplugins.cool_HealthBar;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
-import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Objects;
