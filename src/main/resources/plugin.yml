@@ -1,6 +1,6 @@
 name: Cool_HealthBar
 version: '${version}'
 
-main: org.coolplugins.cool_HealthBar.Cool_HealthBar
+main: org.coolplugins.cool_HealthBar.Coolhealthbar
 api-version: '26.2'
 load: POSTWORLD
