@@ -9,19 +9,13 @@ import java.util.logging.Logger;
 
 public class HealthManager {
 
-    private final Logger logger;
 
-
-    public HealthManager(Logger logger){
-        this.logger = logger;
-    }
-
-    private double getPercentage(LivingEntity entity){
+    public static double getPercentage(LivingEntity entity){
         final int MAX_PERCENT = 100;
         return (entity.getHealth() * MAX_PERCENT)/Objects.requireNonNull(entity.getAttribute(Attribute.MAX_HEALTH)).getValue();
     }
 
-    public void displayHealth(Player player, LivingEntity entity){
+    /*public void displayHealth(Player player, LivingEntity entity){
         logger.info(String.format("Player %s punta %s (%.1f%% HP)",
                 player.getName(), entity.getType(), getPercentage(entity)));
 
@@ -35,5 +29,7 @@ public class HealthManager {
                 textDisplay.remove();
             }
     }
+
+     */
 
 }

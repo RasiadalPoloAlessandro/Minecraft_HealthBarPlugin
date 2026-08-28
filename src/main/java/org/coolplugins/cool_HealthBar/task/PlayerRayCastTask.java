@@ -6,8 +6,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.coolplugins.cool_HealthBar.HealthBarLabel;
 import org.coolplugins.cool_HealthBar.HealthManager;
 import org.coolplugins.cool_HealthBar.HealthManagerGUI;
+import org.coolplugins.cool_HealthBar.healthformatter.EntityHealthBarFormatter;
+import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -19,14 +22,15 @@ import java.util.function.Consumer;
 public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
     private final UUID playerUUID;
-
     private final HealthManagerGUI healthManagerGUI;
+    private final HealthBarRegistry registry;
 
 
 
-    public PlayerRayCastTask(UUID playerUUID, HealthManagerGUI healthManagerGUI) {
+    public PlayerRayCastTask(UUID playerUUID, HealthManagerGUI healthManagerGUI, HealthBarRegistry registry) {
         this.playerUUID = playerUUID;
         this.healthManagerGUI = healthManagerGUI;
+        this.registry = registry;
     }
 
     @Override
@@ -41,7 +45,8 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
             Entity entity = player.getTargetEntity(maxDistance);
             if (entity instanceof LivingEntity livingTarget && livingTarget.getHealth() > 0) {
                 if (!livingTarget.isDead() && livingTarget.getHealth() > 0) {
-                    healthManagerGUI.showOrUpdateText(livingTarget, Component.text(livingTarget.getHealth()));
+                    EntityHealthBarFormatter entityHealthBarFormatter = registry.getFormatter(livingTarget);
+                    healthManagerGUI.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget));
                 } else {
                     healthManagerGUI.removeDisplay(livingTarget.getUniqueId());
                 }
