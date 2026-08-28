@@ -1,6 +1,7 @@
 package org.coolplugins.cool_HealthBar.healthformatter;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.LivingEntity;
 import org.coolplugins.cool_HealthBar.HealthBarLabel;
@@ -21,7 +22,14 @@ public abstract class EntityHealthBarFormatter implements HealthBarLabel {
 
     @Override
     public Component format(LivingEntity entity) {
-        return Component.text(HealthManager.getPercentage(entity)).color(textColor);
+        double percentage = HealthManager.getPercentage(entity);
+
+        return Component.text()
+                .append(Component.text(entity.getName(), NamedTextColor.WHITE))
+                .append(Component.text(":"))
+                .append(Component.space())
+                .append(Component.text(String.format("%.1f%%", percentage), textColor))
+                .build();
     }
 
 }
