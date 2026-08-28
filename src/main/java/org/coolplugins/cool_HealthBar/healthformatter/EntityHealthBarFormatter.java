@@ -25,10 +25,11 @@ public abstract class EntityHealthBarFormatter implements HealthBarLabel {
         double percentage = HealthManager.getPercentage(entity);
 
         return Component.text()
-                .append(Component.text(entity.getName(), NamedTextColor.WHITE))
+                .append(Component.text(entity.getName()))
                 .append(Component.text(":"))
                 .append(Component.space())
-                .append(Component.text(String.format("%.1f%%", percentage), textColor))
+                .append(Component.text(String.format("%.1f", percentage))) // 1 decimal place
+                .color(textColor)
                 .build();
     }
 
