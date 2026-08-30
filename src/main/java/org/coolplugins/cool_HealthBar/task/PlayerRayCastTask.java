@@ -43,7 +43,7 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
             if (entity instanceof LivingEntity livingTarget && livingTarget.getHealth() > 0) {
                 if (!livingTarget.isDead() && livingTarget.getHealth() > 0) {
                     EntityHealthBarFormatter entityHealthBarFormatter = registry.getFormatter(livingTarget);
-                    healthManagerGUI.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget));
+                    healthManagerGUI.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset(livingTarget));
                 } else {
                     healthManagerGUI.removeDisplay(livingTarget.getUniqueId());
                 }

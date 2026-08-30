@@ -5,9 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.coolplugins.cool_HealthBar.gui.HealthManagerGUI;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.FriendlyMobFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.HostileMobFormatter;
-import org.coolplugins.cool_HealthBar.listener.MobDamageListener;
-import org.coolplugins.cool_HealthBar.listener.MobDeathListener;
-import org.coolplugins.cool_HealthBar.listener.PlayerConnectionListener;
+import org.coolplugins.cool_HealthBar.listener.*;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 
 /*
