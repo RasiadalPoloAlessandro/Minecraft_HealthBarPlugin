@@ -44,6 +44,7 @@ public final class Coolhealthbar extends JavaPlugin {
         pm.registerEvents(new PlayerConnectionListener(this, this.healthManagerGUI, registry), this);
         pm.registerEvents(new MobDamageListener(this.healthManagerGUI), this);
         pm.registerEvents(new MobDeathListener(this.healthManagerGUI), this);
+        pm.registerEvents(new WorldEventListener(this.healthManagerGUI), this);
     }
 
     private void setUpFormatters() {

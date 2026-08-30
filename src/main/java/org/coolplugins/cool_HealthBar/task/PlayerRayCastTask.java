@@ -12,15 +12,16 @@ import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-/*
-    Class that uses an imaginary ray in order to know what entity the player is looking,
-    It does this every 2 ticks
-* */
+/**
+ * Periodic task that raycasts from the player's view direction to detect
+ * targeted living entities and display their health bar.
+ */
 public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
     private final UUID playerUUID;
     private final HealthManagerGUI healthManagerGUI;
     private final HealthBarRegistry registry;
+    private UUID lastTargetUUID = null;
 
 
 
@@ -40,18 +41,34 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
             // How many blocks does the ray cover
             final int maxDistance = 8;
             Entity entity = player.getTargetEntity(maxDistance);
-            if (entity instanceof LivingEntity livingTarget && livingTarget.getHealth() > 0) {
+            if (entity instanceof LivingEntity livingTarget) {
                 if (!livingTarget.isDead() && livingTarget.getHealth() > 0) {
+                    UUID currentUUID = livingTarget.getUniqueId();
+
+                    // Remove the previous health bar if the player switched to a different target
+                    if(lastTargetUUID != null && !lastTargetUUID.equals(currentUUID))
+                        healthManagerGUI.removeDisplay(lastTargetUUID);
                     EntityHealthBarFormatter entityHealthBarFormatter = registry.getFormatter(livingTarget);
                     healthManagerGUI.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset(livingTarget));
-                } else {
+                    lastTargetUUID = currentUUID;
+                } else
                     healthManagerGUI.removeDisplay(livingTarget.getUniqueId());
-                }
-            }
 
-        }
-        else
+            } else
+                removeLastUUID();
+
+        } else {
+            removeLastUUID();
+
             bukkitTask.cancel();
+        }
 
     }
+
+    private void removeLastUUID() {
+        if(lastTargetUUID != null)
+            healthManagerGUI.removeDisplay(lastTargetUUID);
+        lastTargetUUID = null;
+    }
+
 }
