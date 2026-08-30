@@ -2,8 +2,9 @@ package org.coolplugins.cool_HealthBar;
 
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.coolplugins.cool_HealthBar.healthformatter.FriendlyMobFormatter;
-import org.coolplugins.cool_HealthBar.healthformatter.HostileMobFormatter;
+import org.coolplugins.cool_HealthBar.gui.HealthManagerGUI;
+import org.coolplugins.cool_HealthBar.gui.healthformatter.FriendlyMobFormatter;
+import org.coolplugins.cool_HealthBar.gui.healthformatter.HostileMobFormatter;
 import org.coolplugins.cool_HealthBar.listener.MobDamageListener;
 import org.coolplugins.cool_HealthBar.listener.MobDeathListener;
 import org.coolplugins.cool_HealthBar.listener.PlayerConnectionListener;
@@ -15,7 +16,7 @@ Plugin that adds a simple health bar
 public final class Coolhealthbar extends JavaPlugin {
 
     private HealthManager healthManager;
-    private  HealthManagerGUI healthManagerGUI;
+    private HealthManagerGUI healthManagerGUI;
     private HealthBarRegistry registry;
 
     @Override

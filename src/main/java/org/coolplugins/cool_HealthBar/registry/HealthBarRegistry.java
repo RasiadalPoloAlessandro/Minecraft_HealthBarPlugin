@@ -1,8 +1,8 @@
 package org.coolplugins.cool_HealthBar.registry;
 
 import org.bukkit.entity.LivingEntity;
-import org.coolplugins.cool_HealthBar.healthformatter.DefaultFormatter;
-import org.coolplugins.cool_HealthBar.healthformatter.EntityHealthBarFormatter;
+import org.coolplugins.cool_HealthBar.gui.healthformatter.DefaultFormatter;
+import org.coolplugins.cool_HealthBar.gui.healthformatter.EntityHealthBarFormatter;
 
 import java.util.ArrayList;
 import java.util.List;

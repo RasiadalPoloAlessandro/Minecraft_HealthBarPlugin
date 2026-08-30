@@ -1,4 +1,4 @@
-package org.coolplugins.cool_HealthBar;
+package org.coolplugins.cool_HealthBar.gui.healthformatter;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;

@@ -6,8 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
-import org.coolplugins.cool_HealthBar.HealthManager;
-import org.coolplugins.cool_HealthBar.HealthManagerGUI;
+import org.coolplugins.cool_HealthBar.gui.HealthManagerGUI;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 import org.coolplugins.cool_HealthBar.task.PlayerRayCastTask;
 

@@ -1,10 +1,8 @@
-package org.coolplugins.cool_HealthBar.healthformatter;
+package org.coolplugins.cool_HealthBar.gui.healthformatter;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.LivingEntity;
-import org.coolplugins.cool_HealthBar.HealthBarLabel;
 import org.coolplugins.cool_HealthBar.HealthManager;
 
 public abstract class EntityHealthBarFormatter implements HealthBarLabel {

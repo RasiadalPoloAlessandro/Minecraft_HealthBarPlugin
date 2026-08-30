@@ -1,15 +1,12 @@
 package org.coolplugins.cool_HealthBar.task;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
-import org.coolplugins.cool_HealthBar.HealthBarLabel;
-import org.coolplugins.cool_HealthBar.HealthManager;
-import org.coolplugins.cool_HealthBar.HealthManagerGUI;
-import org.coolplugins.cool_HealthBar.healthformatter.EntityHealthBarFormatter;
+import org.coolplugins.cool_HealthBar.gui.HealthManagerGUI;
+import org.coolplugins.cool_HealthBar.gui.healthformatter.EntityHealthBarFormatter;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 
 import java.util.UUID;
