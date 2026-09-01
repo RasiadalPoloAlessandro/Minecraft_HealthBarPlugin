@@ -9,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.util.Transformation;
+import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 
@@ -21,6 +22,11 @@ public class HealthManagerGUI {
 
     // track and associate the Healthisplay to the correct mob
     private final Map<UUID, UUID> mobToDisplayMap = new ConcurrentHashMap<>();
+    private final MobNamePDC mobNamePDC;
+
+    public HealthManagerGUI(MobNamePDC mobNamePDC) {
+        this.mobNamePDC = mobNamePDC;
+    }
 
     public void showOrUpdateText(LivingEntity livingEntity, Component text, float yOffset) {
 
@@ -30,7 +36,14 @@ public class HealthManagerGUI {
             return;
         }
 
+        // Hide custom name if present
+        if (livingEntity.customName() != null) {
+            livingEntity.setCustomNameVisible(false);
+        }
+
+
         //Case 2: the mob is alive
+        mobNamePDC.backUpAndHideName(livingEntity);
         UUID mobUUID = livingEntity.getUniqueId();
         UUID displayUUID = mobToDisplayMap.get(mobUUID);
         Location targetLoc = livingEntity.getLocation().add(0, livingEntity.getHeight() + 0.35 + yOffset, 0);
@@ -39,11 +52,6 @@ public class HealthManagerGUI {
         if (displayUUID != null) {
             Entity displayEntity = Bukkit.getEntity(displayUUID);
             if (displayEntity instanceof TextDisplay textDisplay && textDisplay.isValid()) {
-
-                /*
-                Using passengers made more problems than benefits
-                if(!livingEntity.getPassengers().contains(textDisplay))
-                    livingEntity.addPassenger(textDisplay);*/
 
                 textDisplay.text(text);
                 textDisplay.teleport(targetLoc);
@@ -68,6 +76,11 @@ public class HealthManagerGUI {
         //With the map it's known if the current entity has a display as a passenger
         UUID textDisplayUUID = mobToDisplayMap.remove(entityID);
 
+        Entity mobEntity = Bukkit.getEntity(entityID);
+
+        if(mobEntity instanceof LivingEntity livingEntity)
+            mobNamePDC.restoreAndShowName(livingEntity);
+
         if(textDisplayUUID != null) {
             Entity entity = Bukkit.getEntity(textDisplayUUID);
             if (entity != null && entity.isValid())
@@ -76,12 +89,11 @@ public class HealthManagerGUI {
     }
 
     public void clearAll() {
-        for (UUID displayUUID : mobToDisplayMap.values()) {
-            Entity display = Bukkit.getEntity(displayUUID);
-            if (display != null) {
-                display.remove();
-            }
+
+        for (UUID mobUUID : mobToDisplayMap.keySet()) {
+            removeDisplay(mobUUID);
         }
+
         mobToDisplayMap.clear();
     }
 }
