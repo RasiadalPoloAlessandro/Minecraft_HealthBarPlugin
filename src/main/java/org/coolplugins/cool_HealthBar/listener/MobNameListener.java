@@ -16,8 +16,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
-import org.coolplugins.cool_HealthBar.gui.HealthManagerGUI;
+import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
 import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 
 /**
@@ -25,7 +24,7 @@ import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
  * the major problems are when the player rename an entity with a nametag or spawn the entity directly with a customName
  */
 public class MobNameListener implements Listener {
-    private final HealthManagerGUI healthManagerGUI;
+    private final HealthBarDisplayManager healthBarDisplayManager;
     private final MobNamePDC mobNamePDC;
 
     /**
@@ -43,9 +42,9 @@ public class MobNameListener implements Listener {
      * Constructor for MobNameListener
      */
 
-    public MobNameListener(MobNamePDC mobNamePDC, HealthManagerGUI healthManagerGUI) {
+    public MobNameListener(MobNamePDC mobNamePDC, HealthBarDisplayManager healthBarDisplayManager) {
         this.mobNamePDC = mobNamePDC;
-        this.healthManagerGUI = healthManagerGUI;
+        this.healthBarDisplayManager = healthBarDisplayManager;
         scanLoadedEntities();
     }
 
@@ -92,7 +91,7 @@ public class MobNameListener implements Listener {
                 mobNamePDC.setCustomName(living, newName);
 
                 // if changed, reload the health bar
-                healthManagerGUI.removeDisplay(living.getUniqueId());
+                healthBarDisplayManager.removeDisplay(living.getUniqueId());
 
                 // if the player isn't in creative mod, consume the nametag
                 if (player.getGameMode() != GameMode.CREATIVE) {

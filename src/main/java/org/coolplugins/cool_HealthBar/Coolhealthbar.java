@@ -2,7 +2,7 @@ package org.coolplugins.cool_HealthBar;
 
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.coolplugins.cool_HealthBar.gui.HealthManagerGUI;
+import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.DefaultFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.FriendlyMobFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.HostileMobFormatter;
@@ -16,7 +16,7 @@ Plugin that adds a simple health bar
 public final class Coolhealthbar extends JavaPlugin {
 
     private HealthManager healthManager;
-    private HealthManagerGUI healthManagerGUI;
+    private HealthBarDisplayManager healthBarDisplayManager;
     private HealthBarRegistry registry;
     private MobNamePDC mobNamePDC;
 
@@ -25,7 +25,7 @@ public final class Coolhealthbar extends JavaPlugin {
         // Plugin startup logic
         //this.healthManager = new HealthManager(getLogger());
         this.mobNamePDC = new MobNamePDC(this);
-        this.healthManagerGUI = new HealthManagerGUI();
+        this.healthBarDisplayManager = new HealthBarDisplayManager();
         setUpFormatters();
         setUpListeners();
 
@@ -37,17 +37,17 @@ public final class Coolhealthbar extends JavaPlugin {
         // Plugin shutdown logic
 
         //Remove all healthbars
-        healthManagerGUI.clearAll();
+        healthBarDisplayManager.clearAll();
     }
 
     private void setUpListeners() {
         PluginManager pm = getServer().getPluginManager();
 
-        pm.registerEvents(new PlayerConnectionListener(this, this.healthManagerGUI, registry), this);
-        pm.registerEvents(new MobDamageListener(this.healthManagerGUI), this);
-        pm.registerEvents(new MobDeathListener(this.healthManagerGUI), this);
-        pm.registerEvents(new WorldEventListener(this.healthManagerGUI), this);
-        pm.registerEvents(new MobNameListener(this.mobNamePDC, this.healthManagerGUI), this);
+        pm.registerEvents(new PlayerConnectionListener(this, this.healthBarDisplayManager, registry), this);
+        pm.registerEvents(new MobDamageListener(this.healthBarDisplayManager), this);
+        pm.registerEvents(new MobDeathListener(this.healthBarDisplayManager), this);
+        pm.registerEvents(new WorldEventListener(this.healthBarDisplayManager), this);
+        pm.registerEvents(new MobNameListener(this.mobNamePDC, this.healthBarDisplayManager), this);
     }
 
     private void setUpFormatters() {

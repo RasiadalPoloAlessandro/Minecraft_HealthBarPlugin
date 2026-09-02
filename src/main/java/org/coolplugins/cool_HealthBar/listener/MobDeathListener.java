@@ -3,13 +3,13 @@ package org.coolplugins.cool_HealthBar.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.coolplugins.cool_HealthBar.gui.HealthManagerGUI;
+import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
 
 public class MobDeathListener implements Listener {
 
-    private final HealthManagerGUI healthGUI;
+    private final HealthBarDisplayManager healthGUI;
 
-    public MobDeathListener(HealthManagerGUI healthGUI) {
+    public MobDeathListener(HealthBarDisplayManager healthGUI) {
         this.healthGUI = healthGUI;
     }
 

@@ -8,17 +8,13 @@ import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.TextDisplay;
-import org.bukkit.util.Transformation;
-import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
-import org.joml.AxisAngle4f;
-import org.joml.Vector3f;
 
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class HealthManagerGUI {
+public class HealthBarDisplayManager {
 
     // track and associate the Healthisplay to the correct mob
     private final Map<UUID, UUID> mobToDisplayMap = new ConcurrentHashMap<>();

@@ -5,7 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
-import org.coolplugins.cool_HealthBar.gui.HealthManagerGUI;
+import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.EntityHealthBarFormatter;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 
@@ -19,15 +19,15 @@ import java.util.function.Consumer;
 public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
     private final UUID playerUUID;
-    private final HealthManagerGUI healthManagerGUI;
+    private final HealthBarDisplayManager healthBarDisplayManager;
     private final HealthBarRegistry registry;
     private UUID lastTargetUUID = null;
 
 
 
-    public PlayerRayCastTask(UUID playerUUID, HealthManagerGUI healthManagerGUI, HealthBarRegistry registry) {
+    public PlayerRayCastTask(UUID playerUUID, HealthBarDisplayManager healthBarDisplayManager, HealthBarRegistry registry) {
         this.playerUUID = playerUUID;
-        this.healthManagerGUI = healthManagerGUI;
+        this.healthBarDisplayManager = healthBarDisplayManager;
         this.registry = registry;
     }
 
@@ -47,12 +47,12 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
                     // Remove the previous health bar if the player switched to a different target
                     if(lastTargetUUID != null && !lastTargetUUID.equals(currentUUID))
-                        healthManagerGUI.removeDisplay(lastTargetUUID);
+                        healthBarDisplayManager.removeDisplay(lastTargetUUID);
                     EntityHealthBarFormatter entityHealthBarFormatter = registry.getFormatter(livingTarget);
-                    healthManagerGUI.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset(livingTarget));
+                    healthBarDisplayManager.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset(livingTarget));
                     lastTargetUUID = currentUUID;
                 } else
-                    healthManagerGUI.removeDisplay(livingTarget.getUniqueId());
+                    healthBarDisplayManager.removeDisplay(livingTarget.getUniqueId());
 
             } else
                 removeLastUUID();
@@ -67,7 +67,7 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
     private void removeLastUUID() {
         if(lastTargetUUID != null)
-            healthManagerGUI.removeDisplay(lastTargetUUID);
+            healthBarDisplayManager.removeDisplay(lastTargetUUID);
         lastTargetUUID = null;
     }
 
