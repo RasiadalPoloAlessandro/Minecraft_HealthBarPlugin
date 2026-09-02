@@ -23,12 +23,21 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
     private final HealthBarRegistry registry;
     private UUID lastTargetUUID = null;
 
-
-
     public PlayerRayCastTask(UUID playerUUID, HealthManagerGUI healthManagerGUI, HealthBarRegistry registry) {
         this.playerUUID = playerUUID;
         this.healthManagerGUI = healthManagerGUI;
         this.registry = registry;
+    }
+
+    private boolean isValid(Player player, LivingEntity livingEntity) {
+        if (!livingEntity.isValid() || livingEntity.isDead() || livingEntity.getHealth() <= 0) {
+            return false;
+        }
+        if (player.getVehicle() != null && player.getVehicle().equals(livingEntity)) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -36,37 +45,39 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
         // get player
         Player player = Bukkit.getPlayer(playerUUID);
-        if(player != null && player.isOnline()){
+        if (player != null && player.isOnline()) {
             //get target entity
             // How many blocks does the ray cover
             final int maxDistance = 8;
             Entity entity = player.getTargetEntity(maxDistance);
             if (entity instanceof LivingEntity livingTarget) {
-                if (!livingTarget.isDead() && livingTarget.getHealth() > 0) {
+                // FIXED: removed the negation so valid entities show the bar, and handle cleanup in else
+                if (isValid(player, livingTarget)) {
                     UUID currentUUID = livingTarget.getUniqueId();
 
                     // Remove the previous health bar if the player switched to a different target
-                    if(lastTargetUUID != null && !lastTargetUUID.equals(currentUUID))
+                    if (lastTargetUUID != null && !lastTargetUUID.equals(currentUUID))
                         healthManagerGUI.removeDisplay(lastTargetUUID);
+
                     EntityHealthBarFormatter entityHealthBarFormatter = registry.getFormatter(livingTarget);
                     healthManagerGUI.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset(livingTarget));
                     lastTargetUUID = currentUUID;
-                } else
-                    healthManagerGUI.removeDisplay(livingTarget.getUniqueId());
+                } else {
+                    removeLastUUID();
+                }
 
             } else
                 removeLastUUID();
 
         } else {
             removeLastUUID();
-
             bukkitTask.cancel();
         }
 
     }
 
     private void removeLastUUID() {
-        if(lastTargetUUID != null)
+        if (lastTargetUUID != null)
             healthManagerGUI.removeDisplay(lastTargetUUID);
         lastTargetUUID = null;
     }
