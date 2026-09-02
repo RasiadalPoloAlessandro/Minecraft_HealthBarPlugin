@@ -8,7 +8,8 @@ Every HealthBar has to implement this interface
 * */
 public interface HealthBarLabel {
 
-    /*returns the component formatted for a certain mob
+    /**
+     * returns the component formatted for a certain mob
         hostile mob: label with red text, black border ecc...
      */
     Component format(LivingEntity entity);
