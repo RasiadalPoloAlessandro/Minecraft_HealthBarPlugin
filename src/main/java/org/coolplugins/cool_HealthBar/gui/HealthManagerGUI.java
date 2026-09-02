@@ -9,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.util.Transformation;
+import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 
@@ -30,6 +31,12 @@ public class HealthManagerGUI {
             return;
         }
 
+        // Hide custom name if present
+        if (livingEntity.customName() != null) {
+            livingEntity.setCustomNameVisible(false);
+        }
+
+
         //Case 2: the mob is alive
         UUID mobUUID = livingEntity.getUniqueId();
         UUID displayUUID = mobToDisplayMap.get(mobUUID);
@@ -39,11 +46,6 @@ public class HealthManagerGUI {
         if (displayUUID != null) {
             Entity displayEntity = Bukkit.getEntity(displayUUID);
             if (displayEntity instanceof TextDisplay textDisplay && textDisplay.isValid()) {
-
-                /*
-                Using passengers made more problems than benefits
-                if(!livingEntity.getPassengers().contains(textDisplay))
-                    livingEntity.addPassenger(textDisplay);*/
 
                 textDisplay.text(text);
                 textDisplay.teleport(targetLoc);
@@ -76,12 +78,11 @@ public class HealthManagerGUI {
     }
 
     public void clearAll() {
-        for (UUID displayUUID : mobToDisplayMap.values()) {
-            Entity display = Bukkit.getEntity(displayUUID);
-            if (display != null) {
-                display.remove();
-            }
+
+        for (UUID mobUUID : mobToDisplayMap.keySet()) {
+            removeDisplay(mobUUID);
         }
+
         mobToDisplayMap.clear();
     }
 }

@@ -3,16 +3,17 @@ package org.coolplugins.cool_HealthBar.gui.healthformatter;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.Enemy;
 import org.bukkit.entity.LivingEntity;
+import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 
 public class HostileMobFormatter extends EntityHealthBarFormatter {
 
 
-    public  HostileMobFormatter() {
-        super(TextColor.color(100,0,0));
+    public  HostileMobFormatter(MobNamePDC mobNamePDC) {
+        super(mobNamePDC, TextColor.color(100,0,0));
     }
 
-    public HostileMobFormatter(TextColor textColor) {
-        super(textColor);
+    public HostileMobFormatter(MobNamePDC mobNamePDC, TextColor textColor) {
+        super(mobNamePDC, textColor);
     }
 
     @Override
