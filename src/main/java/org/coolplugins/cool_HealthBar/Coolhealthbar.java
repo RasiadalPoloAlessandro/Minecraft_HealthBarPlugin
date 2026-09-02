@@ -25,7 +25,7 @@ public final class Coolhealthbar extends JavaPlugin {
         // Plugin startup logic
         //this.healthManager = new HealthManager(getLogger());
         this.mobNamePDC = new MobNamePDC(this);
-        this.healthManagerGUI = new HealthManagerGUI(mobNamePDC);
+        this.healthManagerGUI = new HealthManagerGUI();
         setUpFormatters();
         setUpListeners();
 
@@ -47,6 +47,7 @@ public final class Coolhealthbar extends JavaPlugin {
         pm.registerEvents(new MobDamageListener(this.healthManagerGUI), this);
         pm.registerEvents(new MobDeathListener(this.healthManagerGUI), this);
         pm.registerEvents(new WorldEventListener(this.healthManagerGUI), this);
+        pm.registerEvents(new MobNameListener(this.mobNamePDC, this.healthManagerGUI), this);
     }
 
     private void setUpFormatters() {

@@ -22,11 +22,6 @@ public class HealthManagerGUI {
 
     // track and associate the Healthisplay to the correct mob
     private final Map<UUID, UUID> mobToDisplayMap = new ConcurrentHashMap<>();
-    private final MobNamePDC mobNamePDC;
-
-    public HealthManagerGUI(MobNamePDC mobNamePDC) {
-        this.mobNamePDC = mobNamePDC;
-    }
 
     public void showOrUpdateText(LivingEntity livingEntity, Component text, float yOffset) {
 
@@ -43,7 +38,6 @@ public class HealthManagerGUI {
 
 
         //Case 2: the mob is alive
-        mobNamePDC.backUpAndHideName(livingEntity);
         UUID mobUUID = livingEntity.getUniqueId();
         UUID displayUUID = mobToDisplayMap.get(mobUUID);
         Location targetLoc = livingEntity.getLocation().add(0, livingEntity.getHeight() + 0.35 + yOffset, 0);
@@ -75,11 +69,6 @@ public class HealthManagerGUI {
 
         //With the map it's known if the current entity has a display as a passenger
         UUID textDisplayUUID = mobToDisplayMap.remove(entityID);
-
-        Entity mobEntity = Bukkit.getEntity(entityID);
-
-        if(mobEntity instanceof LivingEntity livingEntity)
-            mobNamePDC.restoreAndShowName(livingEntity);
 
         if(textDisplayUUID != null) {
             Entity entity = Bukkit.getEntity(textDisplayUUID);

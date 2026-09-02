@@ -38,6 +38,9 @@ public class MobNamePDC {
             pdc.set(namespacedKey, PersistentDataType.STRING, jsonName);
             livingEntity.customName(null);
         }
+
+        livingEntity.customName(null);
+        livingEntity.setCustomNameVisible(false);
     }
 
     /**
@@ -71,5 +74,17 @@ public class MobNamePDC {
             return livingEntity.customName();
         }
         return Component.translatable(livingEntity.getType().translationKey());
+    }
+
+    public void setCustomName(LivingEntity entity, Component name) {
+        PersistentDataContainer pdc = entity.getPersistentDataContainer();
+        String jsonName = serializer.serialize(name);
+
+        // Salva/sovrascrive nel PDC
+        pdc.set(namespacedKey, PersistentDataType.STRING, jsonName);
+
+        // Assicurati che il mob Vanilla non abbia il nome nativo visibile
+        entity.customName(null);
+        entity.setCustomNameVisible(false);
     }
 }
