@@ -60,6 +60,7 @@ public class HealthManagerGUI {
             display.setBillboard(Display.Billboard.VERTICAL);
             display.setPersistent(false);
             display.addScoreboardTag("cool_health_bar");
+            display.setTeleportDuration(2); // it prevents lag sensation when the textDisplay teleport in a new position
         });
 
         mobToDisplayMap.put(mobUUID, txt.getUniqueId());
