@@ -15,21 +15,4 @@ public class HealthManager {
         return (entity.getHealth() * MAX_PERCENT)/Objects.requireNonNull(entity.getAttribute(Attribute.MAX_HEALTH)).getValue();
     }
 
-    /*public void displayHealth(Player player, LivingEntity entity){
-        logger.info(String.format("Player %s punta %s (%.1f%% HP)",
-                player.getName(), entity.getType(), getPercentage(entity)));
-
-    }
-
-    public void hideHealthBar(LivingEntity entity) {
-
-        List<Entity> entities = entity.getPassengers();
-        for(Entity e : entities)
-            if(e instanceof TextDisplay textDisplay) {
-                textDisplay.remove();
-            }
-    }
-
-     */
-
 }
