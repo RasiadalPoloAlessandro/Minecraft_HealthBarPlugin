@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.coolplugins.cool_HealthBar.HealthManager;
 import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 
@@ -11,7 +12,7 @@ public abstract class EntityHealthBarFormatter implements HealthBarLabel {
 
 
     protected final TextColor textColor;
-    protected static final int TOTAL_SEGMENTS = 20;
+    protected static final int TOTAL_SEGMENTS = 10;
     protected static final char FILLED_CHAR = '▰';
     protected static final char EMPTY_CHAR = '▱';
     protected static final TextColor EMPTY_COLOR = TextColor.color(60, 60, 60);
@@ -57,7 +58,7 @@ public abstract class EntityHealthBarFormatter implements HealthBarLabel {
                 .append(Component.text("[", BRACKET_COLOR))
                 .append(bar.build())
                 .append(Component.text("] ", BRACKET_COLOR))
-                .append(Component.text(String.format("%.0f%%", percentage), textColor))
+                .append(Component.text(String.format("%.0f%%", percentage)))
                 .build();
     }
 

@@ -60,7 +60,7 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
                         healthBarDisplayManager.removeDisplay(lastTargetUUID);
 
                     EntityHealthBarFormatter entityHealthBarFormatter = registry.getFormatter(livingTarget);
-                    healthBarDisplayManager.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset(livingTarget));
+                    healthBarDisplayManager.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset());
                     lastTargetUUID = currentUUID;
                 } else {
                     removeLastUUID();

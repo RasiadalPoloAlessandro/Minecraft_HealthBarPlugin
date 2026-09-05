@@ -6,6 +6,7 @@ import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.DefaultFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.FriendlyMobFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.HostileMobFormatter;
+import org.coolplugins.cool_HealthBar.gui.healthformatter.PlayerFormatter;
 import org.coolplugins.cool_HealthBar.listener.*;
 import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
@@ -43,7 +44,7 @@ public final class Coolhealthbar extends JavaPlugin {
     private void setUpListeners() {
         PluginManager pm = getServer().getPluginManager();
 
-        pm.registerEvents(new PlayerConnectionListener(this, this.healthBarDisplayManager, registry), this);
+        pm.registerEvents(new PlayerConnectionListener(this, this.healthBarDisplayManager, registry, new PlayerNameTagManager()), this);
         pm.registerEvents(new MobDamageListener(this.healthBarDisplayManager), this);
         pm.registerEvents(new MobDeathListener(this.healthBarDisplayManager), this);
         pm.registerEvents(new WorldEventListener(this.healthBarDisplayManager), this);
@@ -52,6 +53,7 @@ public final class Coolhealthbar extends JavaPlugin {
 
     private void setUpFormatters() {
         this.registry = new HealthBarRegistry(new DefaultFormatter(this.mobNamePDC));
+        this.registry.register(new PlayerFormatter(this.mobNamePDC));
         this.registry.register(new HostileMobFormatter(this.mobNamePDC));
         this.registry.register(new FriendlyMobFormatter(this.mobNamePDC));
     }
