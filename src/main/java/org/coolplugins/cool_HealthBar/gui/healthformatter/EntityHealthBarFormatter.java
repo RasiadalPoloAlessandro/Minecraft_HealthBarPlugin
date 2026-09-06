@@ -31,35 +31,59 @@ public abstract class EntityHealthBarFormatter implements HealthBarLabel {
 
     /**
      *
-     * @param entity we're want to know the health
-     * @return the text component that will be displayed
+     * @param livingEntity entity
+     * @return a Component that represent the mob's saved name
      */
-    @Override
-    public Component format(LivingEntity entity) {
-        double percentage = HealthManager.getPercentage(entity);
+    protected Component getEntityHeader(LivingEntity livingEntity) { return mobNamePDC.getEffectiveName(livingEntity);}
+
+    /**
+     *
+     * @param livingEntity entity
+     * @param percentage health expressed in percentage
+     * @return the health bar formed by specified chars
+     */
+    private Component buildBarComponent(LivingEntity livingEntity, double percentage) {
 
         int filledSegments = (int) Math.round((percentage / 100) * TOTAL_SEGMENTS);
-        if(percentage > 0 && filledSegments == 0)
+        if (percentage > 0 && filledSegments == 0)
             filledSegments = 1;
 
         TextComponent.Builder bar = Component.text();
-        for(int i = 0; i<  filledSegments; i++)
+        for(int i = 0; i < filledSegments; i++)
             bar.append(Component.text(FILLED_CHAR, textColor));
 
         for(int i = filledSegments; i < TOTAL_SEGMENTS; i++)
             bar.append(Component.text(EMPTY_CHAR, EMPTY_COLOR));
 
-        // get the actual name that has been saved
-        Component displayName = mobNamePDC.getEffectiveName(entity);
-
         return Component.text()
-                .append(displayName)
-                .append(Component.newline())
                 .append(Component.text("[", BRACKET_COLOR))
                 .append(bar.build())
                 .append(Component.text("] ", BRACKET_COLOR))
                 .append(Component.text(String.format("%.0f%%", percentage)))
                 .build();
+    }
+
+    /**
+     *
+     * @param entity we want to know the health
+     * @return the text component that will be displayed
+     */
+    @Override
+    public Component format(LivingEntity entity) {
+
+        double percentage = HealthManager.getPercentage(entity);
+        Component bar = buildBarComponent(entity, percentage);
+        Component mobHeader = getEntityHeader(entity);
+
+        TextComponent.Builder builder = Component.text();
+
+        // It's a mob whose name has been memorized
+        // if it's null it means the entity is a Player, so the name will automatically appear
+        if(mobHeader != null)
+            builder.append(mobHeader).append(Component.newline());
+
+        builder.append(bar);
+        return builder.build();
     }
 
 }

@@ -1,5 +1,6 @@
 package org.coolplugins.cool_HealthBar.gui.healthformatter;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -24,5 +25,14 @@ public class PlayerFormatter extends EntityHealthBarFormatter{
     @Override
     public float getYOffset() {
         return 0.28f;
+    }
+
+    /**
+     *
+     * Players don't have their names saved, so the Header is null
+     */
+    @Override
+    protected Component getEntityHeader(LivingEntity livingEntity) {
+        return null;
     }
 }
