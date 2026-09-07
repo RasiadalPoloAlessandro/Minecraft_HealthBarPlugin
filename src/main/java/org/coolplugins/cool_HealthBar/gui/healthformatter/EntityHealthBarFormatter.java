@@ -77,12 +77,12 @@ public abstract class EntityHealthBarFormatter implements HealthBarLabel {
 
         TextComponent.Builder builder = Component.text();
 
+        builder.append(bar);
         // It's a mob whose name has been memorized
         // if it's null it means the entity is a Player, so the name will automatically appear
         if(mobHeader != null)
-            builder.append(mobHeader).append(Component.newline());
+            builder.append(Component.newline()).append(mobHeader);
 
-        builder.append(bar);
         return builder.build();
     }
 
