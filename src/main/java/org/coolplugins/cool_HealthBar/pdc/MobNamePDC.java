@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
@@ -27,10 +28,15 @@ public class MobNamePDC {
     * */
     public void backUpAndHideName(LivingEntity livingEntity) {
 
+        // check if it's a player, if true save the player's name
+        if(livingEntity instanceof Player player)
+            return;
+
         // get data container
         PersistentDataContainer pdc = livingEntity.getPersistentDataContainer();
         // get entity's custom name
         Component customName = livingEntity.customName();
+
 
         // if it's the first time we hide the custom name
         if (customName != null && !pdc.has(namespacedKey, PersistentDataType.STRING)) {
@@ -63,6 +69,10 @@ public class MobNamePDC {
      * return the mob's name as a Component
      */
     public Component getEffectiveName(LivingEntity livingEntity) {
+
+        if(livingEntity instanceof Player player)
+            return player.displayName();
+
         PersistentDataContainer pdc = livingEntity.getPersistentDataContainer();
         if (pdc.has(namespacedKey, PersistentDataType.STRING)) {
             String jsonName = pdc.get(namespacedKey, PersistentDataType.STRING);
@@ -80,10 +90,10 @@ public class MobNamePDC {
         PersistentDataContainer pdc = entity.getPersistentDataContainer();
         String jsonName = serializer.serialize(name);
 
-        // Salva/sovrascrive nel PDC
+
         pdc.set(namespacedKey, PersistentDataType.STRING, jsonName);
 
-        // Assicurati che il mob Vanilla non abbia il nome nativo visibile
+
         entity.customName(null);
         entity.setCustomNameVisible(false);
     }

@@ -16,6 +16,6 @@ public interface HealthBarLabel {
 
     boolean support(LivingEntity livingEntity);
 
-    default float getYOffset(LivingEntity entity) { return 0.0f; }
+    default float getYOffset() { return 0.0f; }
 
 }
