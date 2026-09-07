@@ -9,11 +9,7 @@ public class HostileMobFormatter extends EntityHealthBarFormatter {
 
 
     public  HostileMobFormatter(MobNamePDC mobNamePDC) {
-        super(mobNamePDC, TextColor.color(100,0,0));
-    }
-
-    public HostileMobFormatter(MobNamePDC mobNamePDC, TextColor textColor) {
-        super(mobNamePDC, textColor);
+        super(mobNamePDC);
     }
 
     @Override

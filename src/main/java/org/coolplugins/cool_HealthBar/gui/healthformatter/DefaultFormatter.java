@@ -10,10 +10,6 @@ public class DefaultFormatter extends EntityHealthBarFormatter {
         super(mobNamePDC);
     }
 
-    public DefaultFormatter(MobNamePDC mobNamePDC, TextColor textColor) {
-        super(mobNamePDC,textColor);
-    }
-
     @Override
     public boolean support(LivingEntity livingEntity) {
         return true;

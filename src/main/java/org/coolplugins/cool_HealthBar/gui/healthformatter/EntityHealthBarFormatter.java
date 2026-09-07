@@ -3,6 +3,8 @@ package org.coolplugins.cool_HealthBar.gui.healthformatter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Color;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.coolplugins.cool_HealthBar.HealthManager;
@@ -11,7 +13,9 @@ import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 public abstract class EntityHealthBarFormatter implements HealthBarLabel {
 
 
-    protected final TextColor textColor;
+    protected static final TextColor FULL_HEALTH_COLOR = TextColor.color(0, 255, 0);
+    protected static final TextColor HALF_HEALTH_COLOR = TextColor.color(255,255,0);
+    protected static final TextColor LOW_HEALTH_COLOR = TextColor.color(255,0,0);
     protected static final int TOTAL_SEGMENTS = 10;
     protected static final char FILLED_CHAR = '▰';
     protected static final char EMPTY_CHAR = '▱';
@@ -21,13 +25,8 @@ public abstract class EntityHealthBarFormatter implements HealthBarLabel {
 
     public EntityHealthBarFormatter(MobNamePDC mobNamePDC) {
         this.mobNamePDC = mobNamePDC;
-        textColor = TextColor.color(255,255,255);
     }
 
-    public EntityHealthBarFormatter(MobNamePDC mobNamePDC, TextColor textColor) {
-        this.mobNamePDC = mobNamePDC;
-        this.textColor = textColor;
-    }
 
     /**
      *
@@ -49,6 +48,15 @@ public abstract class EntityHealthBarFormatter implements HealthBarLabel {
             filledSegments = 1;
 
         TextComponent.Builder bar = Component.text();
+        TextColor textColor;
+
+        if(percentage > 50)
+            textColor = FULL_HEALTH_COLOR;
+        else if(percentage <= 50 && percentage > 20)
+            textColor = HALF_HEALTH_COLOR;
+        else
+            textColor = LOW_HEALTH_COLOR;
+
         for(int i = 0; i < filledSegments; i++)
             bar.append(Component.text(FILLED_CHAR, textColor));
 

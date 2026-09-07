@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class HealthBarDisplayManager {
 
-    // track and associate the Healthisplay to the correct mob
+    // track and associate the Health isplay to the correct mob
     private final Map<UUID, UUID> mobToDisplayMap = new ConcurrentHashMap<>();
 
     public void showOrUpdateText(LivingEntity livingEntity, Component text, float yOffset) {

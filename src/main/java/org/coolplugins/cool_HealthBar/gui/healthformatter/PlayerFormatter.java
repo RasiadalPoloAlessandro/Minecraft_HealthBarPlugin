@@ -10,11 +10,7 @@ public class PlayerFormatter extends EntityHealthBarFormatter{
 
 
     public PlayerFormatter(MobNamePDC mobNamePDC) {
-        super(mobNamePDC, TextColor.color(200,0,0));
-    }
-
-    public PlayerFormatter(MobNamePDC mobNamePDC, TextColor textColor) {
-        super(mobNamePDC, textColor);
+        super(mobNamePDC);
     }
 
     @Override
