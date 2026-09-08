@@ -2,6 +2,7 @@ package org.coolplugins.cool_HealthBar.gui;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Display;
@@ -53,10 +54,16 @@ public class HealthBarDisplayManager {
         World world = livingEntity.getWorld();
         TextDisplay txt = world.spawn(targetLoc, TextDisplay.class, display -> {
             display.text(text);
-            display.setBillboard(Display.Billboard.VERTICAL);
+            display.setBillboard(Display.Billboard.CENTER);
             display.setPersistent(false);
             display.addScoreboardTag("cool_health_bar");
             display.setTeleportDuration(2); // it prevents lag sensation when the textDisplay teleport in a new position
+
+            // to prevent other textures from not being loaded (for example water or lava)
+            display.setBackgroundColor(Color.fromARGB(0,0,0,0));
+
+            // to make the text still readable
+            display.setShadowed(true);
         });
 
         mobToDisplayMap.put(mobUUID, txt.getUniqueId());
