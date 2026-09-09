@@ -1,11 +1,9 @@
-package org.coolplugins.cool_HealthBar;
+package org.coolplugins.cool_HealthBar.model;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public class HealthManager {
 

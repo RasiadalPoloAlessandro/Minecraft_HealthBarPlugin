@@ -1,9 +1,8 @@
-package org.coolplugins.cool_HealthBar.gui;
+package org.coolplugins.cool_HealthBar.gui.component;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.entity.LivingEntity;
 
 public class HealthBar {
 

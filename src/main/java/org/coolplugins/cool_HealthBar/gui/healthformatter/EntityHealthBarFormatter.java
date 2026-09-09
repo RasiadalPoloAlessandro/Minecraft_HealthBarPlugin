@@ -2,13 +2,9 @@ package org.coolplugins.cool_HealthBar.gui.healthformatter;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Color;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.coolplugins.cool_HealthBar.HealthManager;
-import org.coolplugins.cool_HealthBar.gui.HealthBar;
+import org.coolplugins.cool_HealthBar.model.HealthManager;
+import org.coolplugins.cool_HealthBar.gui.component.HealthBar;
 import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 
 public abstract class EntityHealthBarFormatter implements HealthBarLabel {

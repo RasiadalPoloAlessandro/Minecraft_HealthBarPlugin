@@ -5,10 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.*;
+import org.coolplugins.cool_HealthBar.controller.HealthBarController;
+import org.coolplugins.cool_HealthBar.model.HealthManager;
 
 import java.util.Map;
 import java.util.UUID;
@@ -17,76 +16,31 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class HealthBarDisplayManager {
 
-    // track and associate the Health isplay to the correct mob
-    private final Map<UUID, UUID> mobToDisplayMap = new ConcurrentHashMap<>();
 
-    public void showOrUpdateText(LivingEntity livingEntity, Component text, float yOffset) {
-
-        // Case 1: the mob is dead
-        if (livingEntity.isDead() || livingEntity.getHealth() <= 0) {
-            removeDisplay(livingEntity.getUniqueId());
-            return;
-        }
-
-        // Hide custom name if present
-        if (livingEntity.customName() != null) {
-            livingEntity.setCustomNameVisible(false);
-        }
-
-
-        //Case 2: the mob is alive
-        UUID mobUUID = livingEntity.getUniqueId();
-        UUID displayUUID = mobToDisplayMap.get(mobUUID);
-        Location targetLoc = livingEntity.getLocation().add(0, livingEntity.getHeight() + 0.35 + yOffset, 0);
-
-        // Check if an active and valid display already exists
-        if (displayUUID != null) {
-            Entity displayEntity = Bukkit.getEntity(displayUUID);
-            if (displayEntity instanceof TextDisplay textDisplay && textDisplay.isValid()) {
-
-                textDisplay.text(text);
-                textDisplay.teleport(targetLoc);
-                return;
-            }
-        }
-
-        // Make a new display
-        World world = livingEntity.getWorld();
-        TextDisplay txt = world.spawn(targetLoc, TextDisplay.class, display -> {
+    public TextDisplay spawnDisplay(World world, Location loc, Component text) {
+        return world.spawn(loc, TextDisplay.class, display -> {
             display.text(text);
             display.setBillboard(Display.Billboard.CENTER);
             display.setPersistent(false);
             display.addScoreboardTag("cool_health_bar");
-            display.setTeleportDuration(2); // it prevents lag sensation when the textDisplay teleport in a new position
-
-            // to prevent other textures from not being loaded (for example water or lava)
-            display.setBackgroundColor(Color.fromARGB(0,0,0,0));
-
-            // to make the text still readable
+            display.setTeleportDuration(2);
+            display.setBackgroundColor(Color.fromARGB(0, 0, 0, 0));
             display.setShadowed(true);
         });
-
-        mobToDisplayMap.put(mobUUID, txt.getUniqueId());
     }
 
-    public void removeDisplay(UUID entityID) {
-
-        //With the map it's known if the current entity has a display as a passenger
-        UUID textDisplayUUID = mobToDisplayMap.remove(entityID);
-
-        if(textDisplayUUID != null) {
-            Entity entity = Bukkit.getEntity(textDisplayUUID);
-            if (entity != null && entity.isValid())
-                entity.remove();
+    public void updateDisplay(TextDisplay display, Component text, Location loc) {
+        if (display != null && display.isValid()) {
+            display.text(text);
+            display.teleport(loc);
         }
     }
 
-    public void clearAll() {
+    public void removeDisplay(UUID display) {
+        Entity entity = Bukkit.getEntity(display);
 
-        for (UUID mobUUID : mobToDisplayMap.keySet()) {
-            removeDisplay(mobUUID);
+        if (entity instanceof TextDisplay text && text.isValid()) {
+            entity.remove();
         }
-
-        mobToDisplayMap.clear();
     }
 }

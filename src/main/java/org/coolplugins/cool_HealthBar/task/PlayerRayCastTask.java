@@ -5,6 +5,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.coolplugins.cool_HealthBar.HealthBarFilterManager;
+import org.coolplugins.cool_HealthBar.controller.HealthBarController;
 import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.EntityHealthBarFormatter;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
@@ -17,20 +19,22 @@ import java.util.function.Consumer;
  * targeted living entities and display their health bar.
  */
 public class PlayerRayCastTask implements Consumer<BukkitTask> {
-
     private final UUID playerUUID;
-    private final HealthBarDisplayManager healthBarDisplayManager;
     private final HealthBarRegistry registry;
+    private final HealthBarController controller;
+    private final HealthBarFilterManager filterManager;
     private UUID lastTargetUUID = null;
 
-    public PlayerRayCastTask(UUID playerUUID, HealthBarDisplayManager healthBarDisplayManager, HealthBarRegistry registry) {
+    public PlayerRayCastTask(UUID playerUUID, HealthBarController controller, HealthBarRegistry registry, HealthBarFilterManager filterManager) {
         this.playerUUID = playerUUID;
-        this.healthBarDisplayManager = healthBarDisplayManager;
+        this.controller = controller;
         this.registry = registry;
+        this.filterManager = filterManager;
     }
 
+
     private boolean isValid(Player player, LivingEntity livingEntity) {
-        if (!livingEntity.isValid() || livingEntity.isDead() || livingEntity.getHealth() <= 0) {
+        if (!filterManager.isSingleEntityBarVisible(livingEntity.getType()) && !livingEntity.isValid() || livingEntity.isDead() || livingEntity.getHealth() <= 0) {
             return false;
         }
         if (player.getVehicle() != null && player.getVehicle().equals(livingEntity)) {
@@ -42,6 +46,9 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
     @Override
     public void accept(BukkitTask bukkitTask) {
+        // the task's still running, it's better to "freeze" it instead of creating it every time a player want to show again the health bars
+        if(!filterManager.isHealthBarVisible())
+            return;
 
         // get player
         Player player = Bukkit.getPlayer(playerUUID);
@@ -57,10 +64,10 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
                     // Remove the previous health bar if the player switched to a different target
                     if (lastTargetUUID != null && !lastTargetUUID.equals(currentUUID))
-                        healthBarDisplayManager.removeDisplay(lastTargetUUID);
+                        controller.removeDisplay(lastTargetUUID);
 
                     EntityHealthBarFormatter entityHealthBarFormatter = registry.getFormatter(livingTarget);
-                    healthBarDisplayManager.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset());
+                    controller.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset());
                     lastTargetUUID = currentUUID;
                 } else {
                     removeLastUUID();
@@ -78,7 +85,7 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
     private void removeLastUUID() {
         if (lastTargetUUID != null)
-            healthBarDisplayManager.removeDisplay(lastTargetUUID);
+            controller.removeDisplay(lastTargetUUID);
         lastTargetUUID = null;
     }
 
