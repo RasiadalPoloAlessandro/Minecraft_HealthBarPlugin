@@ -5,21 +5,21 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
-import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
+import org.coolplugins.cool_HealthBar.gui.HealthBarView;
 
 public class WorldEventListener implements Listener {
 
-    private final HealthBarDisplayManager healthBarDisplayManager;
+    private final HealthBarView healthBarView;
 
-    public WorldEventListener(HealthBarDisplayManager healthBarDisplayManager) {
-        this.healthBarDisplayManager = healthBarDisplayManager;
+    public WorldEventListener(HealthBarView healthBarView) {
+        this.healthBarView = healthBarView;
     }
 
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
         for (Entity entity : event.getChunk().getEntities()) {
             if (entity instanceof LivingEntity livingEntity) {
-                healthBarDisplayManager.removeDisplay(livingEntity.getUniqueId());
+                healthBarView.removeDisplay(livingEntity.getUniqueId());
             }
         }
     }

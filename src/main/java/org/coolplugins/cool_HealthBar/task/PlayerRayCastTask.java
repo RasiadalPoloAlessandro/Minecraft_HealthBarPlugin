@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.coolplugins.cool_HealthBar.HealthBarFilterManager;
 import org.coolplugins.cool_HealthBar.controller.HealthBarController;
-import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.EntityHealthBarFormatter;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 
@@ -34,7 +33,7 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
 
     private boolean isValid(Player player, LivingEntity livingEntity) {
-        if (!filterManager.isSingleEntityBarVisible(livingEntity.getType()) && !livingEntity.isValid() || livingEntity.isDead() || livingEntity.getHealth() <= 0) {
+        if (!filterManager.isSingleEntityBarVisible(livingEntity.getType()) || !livingEntity.isValid() || livingEntity.isDead() || livingEntity.getHealth() <= 0) {
             return false;
         }
         if (player.getVehicle() != null && player.getVehicle().equals(livingEntity)) {
@@ -47,7 +46,7 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
     @Override
     public void accept(BukkitTask bukkitTask) {
         // the task's still running, it's better to "freeze" it instead of creating it every time a player want to show again the health bars
-        if(!filterManager.isHealthBarVisible())
+        if(!filterManager.hasAnyEnabled())
             return;
 
         // get player

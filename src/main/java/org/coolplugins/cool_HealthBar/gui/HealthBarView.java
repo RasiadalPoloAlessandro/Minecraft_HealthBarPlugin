@@ -6,15 +6,11 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.*;
-import org.coolplugins.cool_HealthBar.controller.HealthBarController;
-import org.coolplugins.cool_HealthBar.model.HealthManager;
 
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 
-public class HealthBarDisplayManager {
+public class HealthBarView {
 
 
     public TextDisplay spawnDisplay(World world, Location loc, Component text) {

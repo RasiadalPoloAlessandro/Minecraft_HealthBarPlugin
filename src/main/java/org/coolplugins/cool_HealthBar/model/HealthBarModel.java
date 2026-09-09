@@ -1,8 +1,5 @@
 package org.coolplugins.cool_HealthBar.model;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -10,7 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class HealthBarManager {
+public class HealthBarModel {
 
     // track and associate the Health isplay to the correct mob
     private final Map<UUID, UUID> mobToDisplayMap = new ConcurrentHashMap<>();

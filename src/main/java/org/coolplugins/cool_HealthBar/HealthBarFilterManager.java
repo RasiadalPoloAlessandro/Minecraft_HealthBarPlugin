@@ -2,34 +2,33 @@ package org.coolplugins.cool_HealthBar;
 
 import org.bukkit.entity.EntityType;
 
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
 public class HealthBarFilterManager {
 
-    private boolean visibility = true;
-    private final Set<EntityType> disabledEntities = EnumSet.noneOf(EntityType.class);
+    private final Set<EntityType> enabledEntities = Collections.synchronizedSet(EnumSet.noneOf(EntityType.class));
 
-    public boolean isHealthBarVisible() {return visibility;}
+    public HealthBarFilterManager() {enableAllEntities();}
 
-    public boolean isSingleEntityBarVisible(EntityType entityType) {
-        if(!visibility)
-            return false;
-        return !disabledEntities.contains(entityType);
-    }
+    public boolean hasAnyEnabled() { return !enabledEntities.isEmpty();}
 
-    public void hideAll() {visibility = false;}
+    public boolean isSingleEntityBarVisible(EntityType entityType) { return enabledEntities.contains(entityType);}
 
-    public void showAll() {
-        visibility = true;
-        disabledEntities.clear();
-    }
+    public void hideAll() {
+        enabledEntities.clear();}
 
-    public void hideEntity(EntityType type) {
-        disabledEntities.add(type);
-    }
+    public void showAll() { enableAllEntities();}
 
-    public void showEntity(EntityType type) {
-        disabledEntities.remove(type);
+    public void hideEntity(EntityType type) { enabledEntities.remove(type);}
+
+    public void showEntity(EntityType type) { enabledEntities.add(type);}
+
+    private void enableAllEntities() {
+        enabledEntities.clear();
+        for(EntityType entityType : EntityType.values())
+            if(entityType.isAlive())
+                enabledEntities.add(entityType);
     }
 }

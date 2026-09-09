@@ -5,7 +5,7 @@ import org.bukkit.entity.*;
 
 import java.util.Objects;
 
-public class HealthManager {
+public class EntityHealth {
 
 
     public static double getPercentage(LivingEntity entity){

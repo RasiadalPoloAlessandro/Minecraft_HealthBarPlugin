@@ -2,41 +2,40 @@ package org.coolplugins.cool_HealthBar.controller;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.*;
-import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
-import org.coolplugins.cool_HealthBar.model.HealthBarManager;
+import org.bukkit.plugin.Plugin;
+import org.coolplugins.cool_HealthBar.gui.HealthBarView;
+import org.coolplugins.cool_HealthBar.model.HealthBarModel;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class HealthBarController {
 
-    private final HealthBarManager healthBarManager;
-    private final HealthBarDisplayManager displayManager;
+    private final HealthBarModel healthBarModel;
+    private final HealthBarView displayManager;
 
-    public HealthBarController(HealthBarManager healthBarManager, HealthBarDisplayManager displayManager) {
-        this.healthBarManager = healthBarManager;
+    public HealthBarController(HealthBarModel healthBarModel, HealthBarView displayManager) {
+        this.healthBarModel = healthBarModel;
         this.displayManager = displayManager;
     }
 
 
     public void removeDisplayByType(EntityType type) {
-        for(UUID uuid : healthBarManager.getMobToDisplayMap().keySet()) {
+        for(UUID uuid : healthBarModel.getMobToDisplayMap().keySet()) {
             Entity entity = Bukkit.getEntity(uuid);
+            Bukkit.getLogger().info(entity.getClass().toString() + "confrontata con " + type.toString());
             if(entity != null && entity.getClass() == type.getEntityClass()) {
                 displayManager.removeDisplay(uuid);
-                healthBarManager.removeElement(uuid);
+                healthBarModel.removeElement(uuid);
             }
         }
     }
 
 
     public void removeDisplay(@NotNull UUID uuid) {
-        UUID displayUUID = healthBarManager.removeElement(uuid);
+        UUID displayUUID = healthBarModel.removeElement(uuid);
         if (displayUUID != null) {
             Entity entity = Bukkit.getEntity(displayUUID);
             if (entity instanceof TextDisplay textDisplay) {
@@ -46,10 +45,8 @@ public class HealthBarController {
     }
 
     public void addElements(UUID mobuuid, @NotNull UUID uuid) {
-        healthBarManager.addElements(mobuuid, uuid);
+        healthBarModel.addElements(mobuuid, uuid);
     }
-
-    public UUID getElementFromMap(@NotNull UUID uuid) { return  healthBarManager.getMobToDisplayMap().get(uuid);}
 
 
 
@@ -69,7 +66,7 @@ public class HealthBarController {
 
 
         //Case 2: the mob is alive
-        UUID displayUUID = healthBarManager.getElement(mobUUID);
+        UUID displayUUID = healthBarModel.getElement(mobUUID);
         Location targetLoc = livingEntity.getLocation().add(0, livingEntity.getHeight() + 0.35 + yOffset, 0);
 
         // Check if an active and valid display already exists
@@ -84,14 +81,14 @@ public class HealthBarController {
 
         TextDisplay newDisplay = displayManager.spawnDisplay(livingEntity.getWorld(), targetLoc, text);
 
-        healthBarManager.addElements(mobUUID, newDisplay.getUniqueId());
+        addElements(mobUUID, newDisplay.getUniqueId());
     }
 
     public void clearAll() {
 
-        for (UUID display : healthBarManager.getAllDisplays()) {
+        for (UUID display : healthBarModel.getAllDisplays()) {
             displayManager.removeDisplay(display);
         }
-        healthBarManager.clearMap();
+        healthBarModel.clearMap();
     }
 }

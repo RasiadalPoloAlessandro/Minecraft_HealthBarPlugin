@@ -7,14 +7,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.coolplugins.cool_HealthBar.command.HideHealthBarCommand;
 import org.coolplugins.cool_HealthBar.command.ShowHealthBarCommand;
 import org.coolplugins.cool_HealthBar.controller.HealthBarController;
-import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
+import org.coolplugins.cool_HealthBar.gui.HealthBarView;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.DefaultFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.FriendlyMobFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.HostileMobFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.PlayerFormatter;
 import org.coolplugins.cool_HealthBar.listener.*;
-import org.coolplugins.cool_HealthBar.model.HealthBarManager;
-import org.coolplugins.cool_HealthBar.model.HealthManager;
+import org.coolplugins.cool_HealthBar.model.HealthBarModel;
 import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 import org.coolplugins.cool_HealthBar.service.HealthBarService;
@@ -26,8 +25,8 @@ Plugin that adds a simple health bar
 * */
 public final class Coolhealthbar extends JavaPlugin {
 
-    private HealthBarManager healthManager;
-    private HealthBarDisplayManager healthBarDisplayManager;
+    private HealthBarModel healthManager;
+    private HealthBarView healthBarView;
     private HealthBarRegistry registry;
     private MobNamePDC mobNamePDC;
     private HealthBarFilterManager filterManager;
@@ -39,9 +38,9 @@ public final class Coolhealthbar extends JavaPlugin {
         // Plugin startup logic
         //this.healthManager = new HealthManager(getLogger());
         this.mobNamePDC = new MobNamePDC(this);
-        this.healthManager = new HealthBarManager();
-        this.healthBarDisplayManager = new HealthBarDisplayManager();
-        this.controller = new HealthBarController(healthManager, healthBarDisplayManager);
+        this.healthManager = new HealthBarModel();
+        this.healthBarView = new HealthBarView();
+        this.controller = new HealthBarController(healthManager, healthBarView);
         this.filterManager = new HealthBarFilterManager();
         this.service = new HealthBarService(filterManager, controller);
         setUpFormatters();
@@ -64,10 +63,10 @@ public final class Coolhealthbar extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
 
         pm.registerEvents(new PlayerConnectionListener(this, this.controller, registry, filterManager), this);
-        pm.registerEvents(new MobDamageListener(this.healthBarDisplayManager), this);
-        pm.registerEvents(new MobDeathListener(this.healthBarDisplayManager), this);
-        pm.registerEvents(new WorldEventListener(this.healthBarDisplayManager), this);
-        pm.registerEvents(new MobNameListener(this.mobNamePDC, this.healthBarDisplayManager), this);
+        pm.registerEvents(new MobDamageListener(this.healthBarView), this);
+        pm.registerEvents(new MobDeathListener(this.healthBarView), this);
+        pm.registerEvents(new WorldEventListener(this.healthBarView), this);
+        pm.registerEvents(new MobNameListener(this.mobNamePDC, this.healthBarView), this);
     }
 
     private void setUpFormatters() {

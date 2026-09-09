@@ -5,13 +5,13 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
+import org.coolplugins.cool_HealthBar.gui.HealthBarView;
 
 public class MobDamageListener implements Listener {
 
-    private final HealthBarDisplayManager healthGUI;
+    private final HealthBarView healthGUI;
 
-    public MobDamageListener(HealthBarDisplayManager healthGUI){
+    public MobDamageListener(HealthBarView healthGUI){
         this.healthGUI = healthGUI;
     }
 

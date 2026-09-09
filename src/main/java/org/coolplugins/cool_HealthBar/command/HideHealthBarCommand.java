@@ -7,8 +7,6 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
-import org.coolplugins.cool_HealthBar.HealthBarFilterManager;
-import org.coolplugins.cool_HealthBar.gui.HealthBarDisplayManager;
 import org.coolplugins.cool_HealthBar.service.HealthBarService;
 
 public class HideHealthBarCommand {
@@ -24,6 +22,15 @@ public class HideHealthBarCommand {
                         })
                 )
                 .then(Commands.argument("entity", StringArgumentType.word())
+                        .suggests((ctx, builder) -> {
+                            String remaining = builder.getRemaining().toLowerCase();
+                            for (EntityType type : EntityType.values()) {
+                                if (type.isAlive() && type.name().toLowerCase().startsWith(remaining)) {
+                                    builder.suggest(type.name().toLowerCase());
+                                }
+                            }
+                            return builder.buildFuture();
+                        })
                         .executes(ctx -> {
                             CommandSender sender = ctx.getSource().getSender();
                             String entityName = StringArgumentType.getString(ctx, "entity");
@@ -31,7 +38,6 @@ public class HideHealthBarCommand {
                             try {
                                 EntityType type = EntityType.valueOf(entityName.toUpperCase());
                                 service.hideEntity(type);
-                                service.removeDisplaysByType(type);
                                 sender.sendRichMessage("<yellow>Health bar nascosta per: " + type.name().toLowerCase());
                             } catch (IllegalArgumentException e) {
                                 sender.sendRichMessage("<red>Tipo entità non valido: " + entityName);
