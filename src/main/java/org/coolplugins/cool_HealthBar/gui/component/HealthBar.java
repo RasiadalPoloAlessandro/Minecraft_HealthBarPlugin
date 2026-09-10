@@ -4,6 +4,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 
+/**
+ * Class that represent the health bar
+ */
 public class HealthBar {
 
     protected static final TextColor FULL_HEALTH_COLOR = TextColor.color(0, 255, 0);
@@ -15,11 +18,21 @@ public class HealthBar {
     private final TextColor emptyColor;
     private final TextColor bracketColor;
 
-
+    /**
+     * Default constructor
+     */
     public HealthBar() {
         this(10, '▰', '▱', TextColor.color(60, 60, 60), TextColor.color(120, 120, 120));
     }
 
+    /**
+     * Public constructor
+     * @param totalSegments representing the health
+     * @param filledChar symbol for health remained
+     * @param emptyChar symbol for health lost
+     * @param emptyColor color for emptyChar symbol
+     * @param bracketColor color for symbol at the edge of the bar
+     */
     public HealthBar(int totalSegments, char filledChar, char emptyChar, TextColor emptyColor, TextColor bracketColor) {
         this.totalSegments = totalSegments;
         this.filledChar = filledChar;
