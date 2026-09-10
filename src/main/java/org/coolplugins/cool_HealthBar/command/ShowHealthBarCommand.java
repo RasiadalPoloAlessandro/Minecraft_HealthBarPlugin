@@ -9,13 +9,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.coolplugins.cool_HealthBar.service.HealthBarService;
 
+/**
+ * Class that when requested through a certain command, show the health bar of one or more entity types
+ */
 public class ShowHealthBarCommand {
 
     public static LiteralArgumentBuilder<CommandSourceStack> create(HealthBarService service) {
         // it's possible to execute the command with multiple parameters
         // it explores all the possibilities
         return Commands.literal("show")
-                // Ramo 1: /hb show all
+                // first case, the player asks to hide the health bar of all entities
                 .then(Commands.literal("all")
                         .executes(ctx -> {
                             service.showAll();
@@ -24,7 +27,7 @@ public class ShowHealthBarCommand {
                             return Command.SINGLE_SUCCESS;
                         })
                 )
-                // Ramo 2: /hb show <entity> (fratello di "all")
+                // second case, the player wants to hide only a certain type
                 .then(Commands.argument("entity", StringArgumentType.word())
                         .suggests((ctx, builder) -> {
                             String remaining = builder.getRemaining().toLowerCase();

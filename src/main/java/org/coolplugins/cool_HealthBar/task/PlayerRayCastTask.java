@@ -24,6 +24,13 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
     private final HealthBarFilterManager filterManager;
     private UUID lastTargetUUID = null;
 
+    /**
+     * Default Constructor
+     * @param playerUUID
+     * @param controller
+     * @param registry
+     * @param filterManager
+     */
     public PlayerRayCastTask(UUID playerUUID, HealthBarController controller, HealthBarRegistry registry, HealthBarFilterManager filterManager) {
         this.playerUUID = playerUUID;
         this.controller = controller;
@@ -31,7 +38,12 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
         this.filterManager = filterManager;
     }
 
-
+    /**
+     * Verufy if the entity the player's looking is alive, is not hidden by a command and its health is greater then 0
+     * @param player that is looking
+     * @param livingEntity that has been looked by the player
+     * @return a boolean
+     */
     private boolean isValid(Player player, LivingEntity livingEntity) {
         if (!filterManager.isSingleEntityBarVisible(livingEntity.getType()) || !livingEntity.isValid() || livingEntity.isDead() || livingEntity.getHealth() <= 0) {
             return false;
@@ -43,6 +55,10 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
         return true;
     }
 
+    /**
+     * When a player connect on the server, a thread starts and capture everything the player looks and, if it's a valid entity, it shows the health bar
+     * @param bukkitTask the input argument
+     */
     @Override
     public void accept(BukkitTask bukkitTask) {
         // the task's still running, it's better to "freeze" it instead of creating it every time a player want to show again the health bars
@@ -82,6 +98,9 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
     }
 
+    /**
+     * Method tha clear last target variable when the player changed what is looking
+     */
     private void removeLastUUID() {
         if (lastTargetUUID != null)
             controller.removeDisplay(lastTargetUUID);
