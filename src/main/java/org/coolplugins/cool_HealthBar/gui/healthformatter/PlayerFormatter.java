@@ -1,12 +1,11 @@
 package org.coolplugins.cool_HealthBar.gui.healthformatter;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 
-public class PlayerFormatter extends EntityHealthBarFormatter{
+public class PlayerFormatter extends AbstractEntityFormatter {
 
 
     public PlayerFormatter(MobNamePDC mobNamePDC) {

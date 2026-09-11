@@ -1,30 +1,28 @@
 package org.coolplugins.cool_HealthBar.registry;
 
 import org.bukkit.entity.LivingEntity;
-import org.coolplugins.cool_HealthBar.gui.healthformatter.DefaultFormatter;
-import org.coolplugins.cool_HealthBar.gui.healthformatter.EntityHealthBarFormatter;
-import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
+import org.coolplugins.cool_HealthBar.gui.healthformatter.AbstractEntityFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HealthBarRegistry {
 
-    private final List<EntityHealthBarFormatter> formatters = new ArrayList<>();
-    private final EntityHealthBarFormatter defaultEntityHealthBarFormatter;
+    private final List<AbstractEntityFormatter> formatters = new ArrayList<>();
+    private final AbstractEntityFormatter defaultAbstractEntityFormatter;
 
-    public HealthBarRegistry(EntityHealthBarFormatter defaultEntityHealthBarFormatter) {
-        this.defaultEntityHealthBarFormatter = defaultEntityHealthBarFormatter;
+    public HealthBarRegistry(AbstractEntityFormatter defaultAbstractEntityFormatter) {
+        this.defaultAbstractEntityFormatter = defaultAbstractEntityFormatter;
     }
 
-    public void register(EntityHealthBarFormatter formatter) {
+    public void register(AbstractEntityFormatter formatter) {
         formatters.add(formatter);
     }
-    public EntityHealthBarFormatter getFormatter(LivingEntity livingEntity) {
-        for(EntityHealthBarFormatter entityFormatter : formatters)
+    public AbstractEntityFormatter getFormatter(LivingEntity livingEntity) {
+        for(AbstractEntityFormatter entityFormatter : formatters)
             if(entityFormatter.support(livingEntity))
                 return entityFormatter;
 
-        return defaultEntityHealthBarFormatter;
+        return defaultAbstractEntityFormatter;
     }
 }

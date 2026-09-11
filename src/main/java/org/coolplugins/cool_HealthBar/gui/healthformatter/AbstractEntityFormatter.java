@@ -7,12 +7,12 @@ import org.coolplugins.cool_HealthBar.model.EntityHealth;
 import org.coolplugins.cool_HealthBar.gui.component.HealthBar;
 import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 
-public abstract class EntityHealthBarFormatter implements HealthBarLabel {
+public abstract class AbstractEntityFormatter implements HealthBarLabel {
 
 
     private final MobNamePDC mobNamePDC;
 
-    public EntityHealthBarFormatter(MobNamePDC mobNamePDC) {
+    public AbstractEntityFormatter(MobNamePDC mobNamePDC) {
         this.mobNamePDC = mobNamePDC;
     }
 

@@ -8,9 +8,7 @@ import org.coolplugins.cool_HealthBar.command.HideHealthBarCommand;
 import org.coolplugins.cool_HealthBar.command.ShowHealthBarCommand;
 import org.coolplugins.cool_HealthBar.controller.HealthBarController;
 import org.coolplugins.cool_HealthBar.gui.HealthBarView;
-import org.coolplugins.cool_HealthBar.gui.healthformatter.DefaultFormatter;
-import org.coolplugins.cool_HealthBar.gui.healthformatter.FriendlyMobFormatter;
-import org.coolplugins.cool_HealthBar.gui.healthformatter.HostileMobFormatter;
+import org.coolplugins.cool_HealthBar.gui.healthformatter.EntityFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.PlayerFormatter;
 import org.coolplugins.cool_HealthBar.listener.*;
 import org.coolplugins.cool_HealthBar.model.HealthBarModel;
@@ -70,10 +68,9 @@ public final class Coolhealthbar extends JavaPlugin {
     }
 
     private void setUpFormatters() {
-        this.registry = new HealthBarRegistry(new DefaultFormatter(this.mobNamePDC));
+        this.registry = new HealthBarRegistry(new EntityFormatter(this.mobNamePDC));
         this.registry.register(new PlayerFormatter(this.mobNamePDC));
-        this.registry.register(new HostileMobFormatter(this.mobNamePDC));
-        this.registry.register(new FriendlyMobFormatter(this.mobNamePDC));
+        this.registry = new HealthBarRegistry(new EntityFormatter(this.mobNamePDC));
     }
 
     private void setUpCommands() {

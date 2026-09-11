@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.coolplugins.cool_HealthBar.HealthBarFilterManager;
 import org.coolplugins.cool_HealthBar.controller.HealthBarController;
-import org.coolplugins.cool_HealthBar.gui.healthformatter.EntityHealthBarFormatter;
+import org.coolplugins.cool_HealthBar.gui.healthformatter.AbstractEntityFormatter;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 
 import java.util.UUID;
@@ -81,8 +81,8 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
                     if (lastTargetUUID != null && !lastTargetUUID.equals(currentUUID))
                         controller.removeDisplay(lastTargetUUID);
 
-                    EntityHealthBarFormatter entityHealthBarFormatter = registry.getFormatter(livingTarget);
-                    controller.showOrUpdateText(livingTarget, entityHealthBarFormatter.format(livingTarget), entityHealthBarFormatter.getYOffset());
+                    AbstractEntityFormatter abstractEntityFormatter = registry.getFormatter(livingTarget);
+                    controller.showOrUpdateText(livingTarget, abstractEntityFormatter.format(livingTarget), abstractEntityFormatter.getYOffset());
                     lastTargetUUID = currentUUID;
                 } else {
                     removeLastUUID();
