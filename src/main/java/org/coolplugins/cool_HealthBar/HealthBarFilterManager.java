@@ -58,10 +58,10 @@ public class HealthBarFilterManager {
     private void enableAllEntities() {
         enabledEntities.clear();
 
-        // searching I found out that applying filters is more effective, It doesn't require if statements and It's more compact
+        // searching a bit I found out that applying filters is more effective, It doesn't require if statements and It's more compact
         Arrays.stream(EntityType.values())
                 .filter(EntityType::isAlive)
-                // Remove the entities that we don't want to be enabled and seen with the health bar (Wither, ecc...)
+                // Removes the entities that we don't want to be enabled and seen with the health bar (Wither, ecc...)
                 .filter(type -> !disabledEntities.contains(type))
                 .forEach(enabledEntities::add);
     }
