@@ -1,13 +1,14 @@
 package org.coolplugins.cool_HealthBar;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 public class HealthBarFilterManager {
 
+    // List of entities we don't want to show the health bar
+    private final Set<EntityType> disabledEntities = new HashSet<>(List.of(EntityType.WITHER));
     private final Set<EntityType> enabledEntities = Collections.synchronizedSet(EnumSet.noneOf(EntityType.class));
 
     /**
@@ -56,8 +57,12 @@ public class HealthBarFilterManager {
      */
     private void enableAllEntities() {
         enabledEntities.clear();
-        for(EntityType entityType : EntityType.values())
-            if(entityType.isAlive())
-                enabledEntities.add(entityType);
+
+        // searching I found out that applying filters is more effective, It doesn't require if statements and It's more compact
+        Arrays.stream(EntityType.values())
+                .filter(EntityType::isAlive)
+                // Remove the entities that we don't want to be enabled and seen with the health bar (Wither, ecc...)
+                .filter(type -> !disabledEntities.contains(type))
+                .forEach(enabledEntities::add);
     }
 }
