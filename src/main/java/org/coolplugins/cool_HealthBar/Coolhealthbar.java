@@ -2,6 +2,9 @@ package org.coolplugins.cool_HealthBar;
 
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.translation.GlobalTranslator;
+import net.kyori.adventure.translation.TranslationStore;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.coolplugins.cool_HealthBar.command.HideHealthBarCommand;
@@ -16,7 +19,10 @@ import org.coolplugins.cool_HealthBar.pdc.MobNamePDC;
 import org.coolplugins.cool_HealthBar.registry.HealthBarRegistry;
 import org.coolplugins.cool_HealthBar.service.HealthBarService;
 
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /*
 Plugin that adds a simple health bar
@@ -30,6 +36,7 @@ public final class Coolhealthbar extends JavaPlugin {
     private HealthBarFilterManager filterManager;
     private HealthBarService service;
     private HealthBarController controller;
+    private TranslationStore.StringBased<MessageFormat> translationStore;
 
     @Override
     public void onEnable() {
@@ -41,6 +48,7 @@ public final class Coolhealthbar extends JavaPlugin {
         this.controller = new HealthBarController(healthManager, healthBarView);
         this.filterManager = new HealthBarFilterManager();
         this.service = new HealthBarService(filterManager, controller);
+        setUpTranslations();
         setUpFormatters();
         setUpListeners();
 
@@ -79,7 +87,6 @@ public final class Coolhealthbar extends JavaPlugin {
 
             commands.register(
                     Commands.literal("healthbar")
-                            .requires(source -> source.getSender().hasPermission("coolhealthbar.admin"))
                             .then(ShowHealthBarCommand.create(service))
                             .then(HideHealthBarCommand.create(service))
                             .build(),
@@ -87,5 +94,24 @@ public final class Coolhealthbar extends JavaPlugin {
                     List.of("hb", "chb")
             );
         });
+    }
+
+    /**
+     * Method that setUp all the custom translations related to the plugin
+     */
+    private void setUpTranslations() {
+        this.translationStore = TranslationStore.messageFormat(Key.key("cool_health_bar", "translations"));
+        ClassLoader loader = this.getClassLoader();
+
+        // English version (Default choice)
+        ResourceBundle bundleEn = ResourceBundle.getBundle("Bundle", Locale.US, loader);
+        this.translationStore.registerAll(Locale.US, bundleEn, true);
+
+        // Italian version
+        ResourceBundle bundleIt = ResourceBundle.getBundle("Bundle", Locale.ITALY, loader);
+        this.translationStore.registerAll(Locale.ITALY, bundleIt, true);
+
+        // add the store to the globalTranslator
+        GlobalTranslator.translator().addSource(this.translationStore);
     }
 }

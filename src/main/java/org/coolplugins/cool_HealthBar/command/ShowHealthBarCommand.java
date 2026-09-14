@@ -5,9 +5,12 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.coolplugins.cool_HealthBar.service.HealthBarService;
+
+import static org.coolplugins.cool_HealthBar.command.MessageColorPalette.*;
 
 /**
  * Class that when requested through a certain command, show the health bar of one or more entity types
@@ -23,7 +26,7 @@ public class ShowHealthBarCommand {
                         .executes(ctx -> {
                             service.showAll();
                             CommandSender sender = ctx.getSource().getSender();
-                            sender.sendRichMessage("<green>Health bar abilitata per tutte le entità!");
+                            sender.sendMessage(Component.translatable("healthbar.command.show.all").color(successMessage));
                             return Command.SINGLE_SUCCESS;
                         })
                 )
@@ -45,14 +48,14 @@ public class ShowHealthBarCommand {
                             try {
                                 EntityType type = EntityType.valueOf(entityName.toUpperCase());
                                 if (!type.isAlive()) {
-                                    sender.sendRichMessage("<red>L'entità <yellow>" + entityName + "</yellow> non è un'entità vivente.");
+                                    sender.sendMessage(Component.translatable("healthbar.error.not_living").color(errorMessage));
                                     return Command.SINGLE_SUCCESS;
                                 }
 
                                 service.showEntity(type);
-                                sender.sendRichMessage("<green>Health bar abilitata per: <yellow>" + type.name().toLowerCase());
+                                sender.sendMessage(Component.translatable("healthbar.command.show.single", Component.text(type.name().toLowerCase()).color(successMessage)));
                             } catch (IllegalArgumentException e) {
-                                sender.sendRichMessage("<red>Tipo di entità non valido: <yellow>" + entityName);
+                                sender.sendMessage(Component.translatable("healthbar.error.failedCommand").color(errorMessage));
                             }
 
                             return Command.SINGLE_SUCCESS;

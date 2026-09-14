@@ -5,9 +5,12 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.coolplugins.cool_HealthBar.service.HealthBarService;
+import static org.coolplugins.cool_HealthBar.command.MessageColorPalette.*;
+
 
 /**
  * Class that when requested through a certain command, hide the health bar of one or more entity types
@@ -26,7 +29,7 @@ public class HideHealthBarCommand {
                         .executes(ctx -> {
                             service.hideAll();
 
-                            ctx.getSource().getSender().sendRichMessage("<yellow>Health bar disabilitate per tutti.");
+                            ctx.getSource().getSender().sendMessage(Component.translatable("healthbar.command.hide.all").color(successMessage));
                             return Command.SINGLE_SUCCESS;
                         })
                 )
@@ -49,9 +52,9 @@ public class HideHealthBarCommand {
                             try {
                                 EntityType type = EntityType.valueOf(entityName.toUpperCase());
                                 service.hideEntity(type);
-                                sender.sendRichMessage("<yellow>Health bar nascosta per: " + type.name().toLowerCase());
+                                sender.sendMessage(Component.translatable("healthbar.command.hide.single", Component.text(type.name().toLowerCase()).color(successMessage)));
                             } catch (IllegalArgumentException e) {
-                                sender.sendRichMessage("<red>Tipo entità non valido: " + entityName);
+                                sender.sendMessage(Component.translatable("healthbar.error.not_living").color(errorMessage));
                             }
                             return Command.SINGLE_SUCCESS;
                         })
