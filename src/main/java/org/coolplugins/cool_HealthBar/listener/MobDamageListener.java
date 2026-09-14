@@ -5,15 +5,14 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.coolplugins.cool_HealthBar.HealthManagerGUI;
+import org.coolplugins.cool_HealthBar.controller.HealthBarController;
 
 public class MobDamageListener implements Listener {
 
-    private final HealthManagerGUI healthGUI;
+    private final HealthBarController controller;
 
-    public MobDamageListener(HealthManagerGUI healthGUI){
-        this.healthGUI = healthGUI;
+    public MobDamageListener(HealthBarController controller){
+        this.controller = controller;
     }
 
     @EventHandler
@@ -29,7 +28,7 @@ public class MobDamageListener implements Listener {
 
             double currentHealth = livingEntity.getHealth() - event.getFinalDamage();
             if(currentHealth <= 0.0)
-                healthGUI.removeDisplay(livingEntity.getUniqueId());
+                controller.removeDisplay(livingEntity.getUniqueId());
         }
     }
 }
