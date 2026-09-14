@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
-import org.bukkit.plugin.Plugin;
 import org.coolplugins.cool_HealthBar.gui.HealthBarView;
 import org.coolplugins.cool_HealthBar.model.HealthBarModel;
 import org.jetbrains.annotations.NotNull;

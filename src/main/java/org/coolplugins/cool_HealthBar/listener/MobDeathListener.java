@@ -4,7 +4,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.coolplugins.cool_HealthBar.controller.HealthBarController;
-import org.coolplugins.cool_HealthBar.gui.HealthBarView;
 
 public class MobDeathListener implements Listener {
 

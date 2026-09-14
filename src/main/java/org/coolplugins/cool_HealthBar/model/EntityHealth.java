@@ -1,7 +1,7 @@
 package org.coolplugins.cool_HealthBar.model;
 
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.*;
+import org.bukkit.entity.LivingEntity;
 
 import java.util.Objects;
 
