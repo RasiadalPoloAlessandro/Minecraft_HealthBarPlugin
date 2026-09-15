@@ -15,7 +15,9 @@
 - **Native Localization:** Command messages and UI support both English and Italian, leveraging client-side language detection.
 - **Boss Protection:** Built-in exclusions so vanilla bosses remain unaffected.
 
----
+https://github.com/user-attachments/assets/448f554d-c099-4ad6-a79d-aa8eac20c98f
+
+
 
 ## Commands
 
@@ -42,3 +44,6 @@ Base command: `/chb`
 1. Download the latest `.jar` from the [Releases](https://github.com/RasiadalPoloAlessandro/Minecraft_HealthBarPlugin/releases) section.
 2. Drop the file into your server's `plugins/` directory.
 3. Start or restart your server.
+
+## FeedBack
+Feel free to add issues if you encounter bugs or you suggestion for improving this project. Any help is more than appreciated 
