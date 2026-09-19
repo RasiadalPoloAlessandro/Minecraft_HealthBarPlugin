@@ -12,7 +12,7 @@ public class HealthBar {
     protected static final TextColor FULL_HEALTH_COLOR = TextColor.color(0, 255, 0);
     protected static final TextColor HALF_HEALTH_COLOR = TextColor.color(255,255,0);
     protected static final TextColor LOW_HEALTH_COLOR = TextColor.color(255,0,0);
-    private final int totalSegments;
+    private final int totalSegments = 10;
     private final char filledChar;
     private final char emptyChar;
     private final TextColor emptyColor;
@@ -21,20 +21,16 @@ public class HealthBar {
     /**
      * Default constructor
      */
-    public HealthBar() {
-        this(10, '▰', '▱', TextColor.color(60, 60, 60), TextColor.color(120, 120, 120));
+    public static HealthBar defaultHealthBar() {
+        return new HealthBar('▰', '▱', TextColor.color(60, 60, 60), TextColor.color(120, 120, 120));
     }
 
-    /**
-     * Public constructor
-     * @param totalSegments representing the health
-     * @param filledChar symbol for health remained
-     * @param emptyChar symbol for health lost
-     * @param emptyColor color for emptyChar symbol
-     * @param bracketColor color for symbol at the edge of the bar
-     */
-    public HealthBar(int totalSegments, char filledChar, char emptyChar, TextColor emptyColor, TextColor bracketColor) {
-        this.totalSegments = totalSegments;
+    public static HealthBar customHealthBar(char filledChar, char emptyChar, TextColor emptyColor, TextColor bracketColor) {
+        return new HealthBar(filledChar, emptyChar, emptyColor, bracketColor);
+    }
+
+
+    private HealthBar(char filledChar, char emptyChar, TextColor emptyColor, TextColor bracketColor) {
         this.filledChar = filledChar;
         this.emptyChar = emptyChar;
         this.emptyColor = emptyColor;
