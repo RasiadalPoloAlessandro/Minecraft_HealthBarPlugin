@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.coolplugins.cool_HealthBar.command.HideHealthBarCommand;
 import org.coolplugins.cool_HealthBar.command.ShowHealthBarCommand;
 import org.coolplugins.cool_HealthBar.controller.HealthBarController;
+import org.coolplugins.cool_HealthBar.customization.HealthBarConfigurationManager;
 import org.coolplugins.cool_HealthBar.gui.HealthBarView;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.EntityFormatter;
 import org.coolplugins.cool_HealthBar.gui.healthformatter.PlayerFormatter;
@@ -42,6 +43,8 @@ public final class Coolhealthbar extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         //this.healthManager = new HealthManager(getLogger());
+
+        HealthBarConfigurationManager.ensureFileExists();
         this.mobNamePDC = new MobNamePDC(this);
         this.healthManager = new HealthBarModel();
         this.healthBarView = new HealthBarView();
@@ -51,7 +54,6 @@ public final class Coolhealthbar extends JavaPlugin {
         setUpTranslations();
         setUpFormatters();
         setUpListeners();
-
         setUpCommands();
 
         getLogger().info("CoolHealthBar e' stato avviato correttamente!");
