@@ -19,7 +19,6 @@ public class HealthBarModel {
 
     /**
      *
-     * @param entityID
      * @return the TextDisplay shown above the mob
      */
     public UUID removeElement(@NotNull UUID entityID) {

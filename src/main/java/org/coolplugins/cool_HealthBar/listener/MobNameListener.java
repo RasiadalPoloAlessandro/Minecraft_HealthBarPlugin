@@ -71,7 +71,6 @@ public class MobNameListener implements Listener {
     /**
      * Method that prevent the name given by the nametag from visualizing on screen
      *
-     * @param event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onNameTagUse(PlayerInteractEntityEvent event) {

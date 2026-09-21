@@ -26,10 +26,6 @@ public class PlayerRayCastTask implements Consumer<BukkitTask> {
 
     /**
      * Default Constructor
-     * @param playerUUID
-     * @param controller
-     * @param registry
-     * @param filterManager
      */
     public PlayerRayCastTask(UUID playerUUID, HealthBarController controller, HealthBarRegistry registry, HealthBarFilterManager filterManager) {
         this.playerUUID = playerUUID;
