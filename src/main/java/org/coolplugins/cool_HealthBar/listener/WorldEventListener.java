@@ -18,9 +18,8 @@ public class WorldEventListener implements Listener {
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
         for (Entity entity : event.getChunk().getEntities()) {
-            if (entity instanceof LivingEntity livingEntity) {
+            if (entity instanceof LivingEntity livingEntity)
                 controller.removeDisplay(livingEntity.getUniqueId());
-            }
         }
     }
 }

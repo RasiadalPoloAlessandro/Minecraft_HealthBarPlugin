@@ -5,7 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Display;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.TextDisplay;
 
 import java.util.UUID;
 
@@ -16,9 +18,6 @@ public class HealthBarView {
 
 
     /**
-     * @param world
-     * @param loc
-     * @param text
      * @return the text display spawn above the mob's head
      */
     public TextDisplay spawnDisplay(World world, Location loc, Component text) {
@@ -35,9 +34,6 @@ public class HealthBarView {
 
     /**
      * Update the text of an existing health bar
-     * @param display
-     * @param text
-     * @param loc
      */
     public void updateDisplay(TextDisplay display, Component text, Location loc) {
         if (display != null && display.isValid()) {
@@ -48,7 +44,6 @@ public class HealthBarView {
 
     /**
      * remove the health bar from an entity
-     * @param display
      */
     public void removeDisplay(UUID display) {
         Entity entity = Bukkit.getEntity(display);

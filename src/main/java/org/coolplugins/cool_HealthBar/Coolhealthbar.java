@@ -24,30 +24,33 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 /*
 Plugin that adds a simple health bar
 * */
 public final class Coolhealthbar extends JavaPlugin {
 
-    private HealthBarModel healthManager;
-    private HealthBarView healthBarView;
     private HealthBarRegistry registry;
     private MobNamePDC mobNamePDC;
     private HealthBarFilterManager filterManager;
     private HealthBarService service;
     private HealthBarController controller;
-    private TranslationStore.StringBased<MessageFormat> translationStore;
+
+    private static Logger logger;
+
+
+    public static Logger getServerLogger() {return logger;}
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         //this.healthManager = new HealthManager(getLogger());
-
+        logger = this.getLogger();
         HealthBarConfigurationManager.ensureFileExists();
         this.mobNamePDC = new MobNamePDC(this);
-        this.healthManager = new HealthBarModel();
-        this.healthBarView = new HealthBarView();
+        HealthBarModel healthManager = new HealthBarModel();
+        HealthBarView healthBarView = new HealthBarView();
         this.controller = new HealthBarController(healthManager, healthBarView);
         this.filterManager = new HealthBarFilterManager();
         this.service = new HealthBarService(filterManager, controller);
@@ -56,7 +59,7 @@ public final class Coolhealthbar extends JavaPlugin {
         setUpListeners();
         setUpCommands();
 
-        getLogger().info("CoolHealthBar e' stato avviato correttamente!");
+        getLogger().info("CoolHealthBar loaded without problems!");
     }
 
     @Override
@@ -92,7 +95,7 @@ public final class Coolhealthbar extends JavaPlugin {
                             .then(ShowHealthBarCommand.create(service))
                             .then(HideHealthBarCommand.create(service))
                             .build(),
-                    "Gestione della visibilità della barra della vita",
+                    "Configuration for Health bar's visualization",
                     List.of("hb", "chb")
             );
         });
@@ -102,18 +105,18 @@ public final class Coolhealthbar extends JavaPlugin {
      * Method that setUp all the custom translations related to the plugin
      */
     private void setUpTranslations() {
-        this.translationStore = TranslationStore.messageFormat(Key.key("cool_health_bar", "translations"));
+        TranslationStore.StringBased<MessageFormat> translationStore = TranslationStore.messageFormat(Key.key("cool_health_bar", "translations"));
         ClassLoader loader = this.getClassLoader();
 
         // English version (Default choice)
         ResourceBundle bundleEn = ResourceBundle.getBundle("Bundle", Locale.US, loader);
-        this.translationStore.registerAll(Locale.US, bundleEn, true);
+        translationStore.registerAll(Locale.US, bundleEn, true);
 
         // Italian version
         ResourceBundle bundleIt = ResourceBundle.getBundle("Bundle", Locale.ITALY, loader);
-        this.translationStore.registerAll(Locale.ITALY, bundleIt, true);
+        translationStore.registerAll(Locale.ITALY, bundleIt, true);
 
         // add the store to the globalTranslator
-        GlobalTranslator.translator().addSource(this.translationStore);
+        GlobalTranslator.translator().addSource(translationStore);
     }
 }

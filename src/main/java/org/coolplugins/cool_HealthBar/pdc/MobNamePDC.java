@@ -29,7 +29,7 @@ public class MobNamePDC {
     public void backUpAndHideName(LivingEntity livingEntity) {
 
         // check if it's a player, if true save the player's name
-        if(livingEntity instanceof Player player)
+        if(livingEntity instanceof Player)
             return;
 
         // get data container
@@ -47,22 +47,6 @@ public class MobNamePDC {
 
         livingEntity.customName(null);
         livingEntity.setCustomNameVisible(false);
-    }
-
-    /**
-     * Restore and show the original name of the mob
-     * */
-    public void restoreAndShowName(LivingEntity livingEntity) {
-
-        PersistentDataContainer pdc = livingEntity.getPersistentDataContainer();
-
-        if (pdc.has(namespacedKey, PersistentDataType.STRING)) {
-            String jsonName = pdc.get(namespacedKey, PersistentDataType.STRING);
-            if (jsonName != null) {
-                livingEntity.customName(serializer.deserialize(jsonName));
-            }
-            pdc.remove(namespacedKey);
-        }
     }
 
     /**

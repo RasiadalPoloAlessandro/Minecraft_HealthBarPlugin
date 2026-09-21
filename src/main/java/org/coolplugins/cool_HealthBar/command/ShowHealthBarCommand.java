@@ -10,7 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.coolplugins.cool_HealthBar.service.HealthBarService;
 
-import static org.coolplugins.cool_HealthBar.command.MessageColorPalette.*;
+import static org.coolplugins.cool_HealthBar.command.MessageColorPalette.errorMessage;
+import static org.coolplugins.cool_HealthBar.command.MessageColorPalette.successMessage;
 
 /**
  * Class that when requested through a certain command, show the health bar of one or more entity types
@@ -21,7 +22,7 @@ public class ShowHealthBarCommand {
         // it's possible to execute the command with multiple parameters
         // it explores all the possibilities
         return Commands.literal("show")
-                // first case, the player asks to hide the health bar of all entities
+                // first case, the player asks to hide the health bar of all the entities
                 .then(Commands.literal("all")
                         .executes(ctx -> {
                             service.showAll();
@@ -32,7 +33,7 @@ public class ShowHealthBarCommand {
                 )
                 // second case, the player wants to hide only a certain type
                 .then(Commands.argument("entity", StringArgumentType.word())
-                        .suggests((ctx, builder) -> {
+                        .suggests((_, builder) -> {
                             String remaining = builder.getRemaining().toLowerCase();
                             for (EntityType type : EntityType.values()) {
                                 if (type.isAlive() && type.name().toLowerCase().startsWith(remaining)) {

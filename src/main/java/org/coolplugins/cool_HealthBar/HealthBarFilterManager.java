@@ -1,6 +1,5 @@
 package org.coolplugins.cool_HealthBar;
 
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import java.util.*;

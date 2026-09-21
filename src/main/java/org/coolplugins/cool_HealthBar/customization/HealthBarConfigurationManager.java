@@ -4,9 +4,12 @@ import com.google.gson.*;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
+import org.coolplugins.cool_HealthBar.Coolhealthbar;
 import org.coolplugins.cool_HealthBar.gui.component.HealthBar;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -43,10 +46,10 @@ public class HealthBarConfigurationManager {
                 GSON.toJson(defaultJson, writer);
             }
 
-            Bukkit.getLogger().info("[Cool_HealthBar] Created default configuration in: " + JSON_PATH);
+            Coolhealthbar.getServerLogger().info("Created default configuration in: " + JSON_PATH);
 
         } catch (IOException e) {
-            Bukkit.getLogger().severe("[Cool_HealthBar] Error during the default configuration: " + e.getMessage());
+            Coolhealthbar.getServerLogger().severe("Error during the default configuration: " + e.getMessage());
         }
     }
 
@@ -64,7 +67,7 @@ public class HealthBarConfigurationManager {
 
             return element != null && element.isJsonObject() ? element.getAsJsonObject() : null;
         } catch (IOException e) {
-            Bukkit.getLogger().warning("[Cool_HealthBar] Error during the json parsing: " + e.getMessage());
+            Coolhealthbar.getServerLogger().warning("Error during the json parsing: " + e.getMessage());
             return null;
         }
     }

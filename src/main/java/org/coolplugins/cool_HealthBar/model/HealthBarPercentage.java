@@ -5,8 +5,7 @@ import org.bukkit.entity.LivingEntity;
 
 import java.util.Objects;
 
-public class EntityHealth {
-
+public class HealthBarPercentage {
 
     public static double getPercentage(LivingEntity entity){
         final int MAX_PERCENT = 100;
